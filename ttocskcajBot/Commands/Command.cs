@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ttocskcajBot.Commands.Controllers;
 using ttocskcajBot.Entities;
 
 namespace ttocskcajBot.Commands
@@ -10,6 +11,10 @@ namespace ttocskcajBot.Commands
     {
         public string Verb { get; set; }
         public IEntity Entity { get; set; }
+
+        public Command()
+        {
+        }
 
         internal static Command ParseMessage(DiscordMessage message)
         {
@@ -20,19 +25,24 @@ namespace ttocskcajBot.Commands
             switch (parts.Length)
             {
                 case 0:
-                    throw new CommandException("Command was empty");
+                    throw new CommandException("Commands can't be empty!");
                 case 1:
                     command.Verb = parts[0];
                     break;
                 default:
-                    throw new CommandException("Command was too long");
+                    throw new CommandException("That command is too long!");
             }
 
             return command;
         }
+        internal string Exec()
+        {
+            IController controller = Router.Instance.GetCommandController(this);
+            return controller.RunCommand(this);
+        }
 
         [Serializable]
-        private class CommandException : Exception
+        internal class CommandException : Exception
         {
             public CommandException()
             {

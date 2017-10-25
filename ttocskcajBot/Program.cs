@@ -3,13 +3,14 @@ using DSharpPlus;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using ttocskcajBot.Commands;
+using static ttocskcajBot.Commands.Command;
 
 namespace ttocskcajBot
 {
     class Program
     {
         static DiscordClient discord;
-        static List<Player> players;
+        internal Router Router { get; set; }
         static void Main(string[] args)
         {
             MainAsync(args).ConfigureAwait(false).GetAwaiter().GetResult();
@@ -22,12 +23,20 @@ namespace ttocskcajBot
                 TokenType = TokenType.Bot
             });
 
-            
+
             discord.MessageCreated += async e =>
             {
-                if (e.Message.Content.StartsWith(">")){
-                    string response = CommandRunner.Exec(Command.ParseMessage(e.Message));
-                    await e.Message.RespondAsync(response);
+                if (e.Message.Content.StartsWith(">"))
+                {
+                    try
+                    {
+                        string response = Command.ParseMessage(e.Message).Exec();
+                        await e.Message.RespondAsync(response);
+                    }
+                    catch (CommandException ex)
+                    {
+                        await e.Message.RespondAsync(ex.Message);
+                    }
                 }
             };
 
