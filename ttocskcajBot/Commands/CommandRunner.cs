@@ -7,7 +7,7 @@ namespace ttocskcajBot.Commands
     {
         internal static string Exec(Command command)
         {
-            throw new NotImplementedException();
+            return "Command doesn't exist";
         }
     }
 }
