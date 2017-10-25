@@ -4,6 +4,6 @@ namespace ttocskcajBot.Commands.Controllers
 {
     internal interface IController
     {
-        string RunCommand(Command command); 
+        string RunCommand(Command command);
     }
 }
