@@ -19,7 +19,7 @@ namespace ttocskcajBot.Commands
         internal static Command ParseMessage(DiscordMessage message)
         {
             string commandString = message.Content.TrimStart('>');
-            string[] parts = commandString.Split(' ');
+            string[] parts = commandString.Split(new[] { ' ' }, 2);
 
             Command command = new Command();
             switch (parts.Length)

@@ -49,6 +49,7 @@ namespace ttocskcajBot
 
         internal IEntity FindEntity(string entityName)
         {
+            entityName = entityName.ToLower().Replace(' ', '_');
             // Check each area in the room for the entity
             foreach (Area area in CurrentRoom.Areas)
             {
