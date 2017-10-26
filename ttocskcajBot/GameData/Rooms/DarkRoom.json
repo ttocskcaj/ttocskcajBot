@@ -4,8 +4,8 @@
   "description": "You awake in the dark. The air is chilly and damp, and you can hear water slowly trickling in the distance. You have no idea how you got here, but suspect the Gerds had something to do with it.\nBy the limited light coming through a small window high on a wall, you can make out the outline of a fireplace and a bed.",
   "areas": [
     {
-      "id": "brick_fireplace",
-      "name": "Brick Fireplace",
+      "id": "fireplace",
+      "name": "Fireplace",
       "description": "In the center of one of the walls lies a tall brick fireplace. The fireplace looks freshly set, and you can just make out a box of matches sitting on the mantle.",
       "things": [
         {
