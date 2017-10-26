@@ -1,0 +1,23 @@
+﻿___Movement___
+Try inspecting some items.
+```>inspect bed```
+Try moving through doors or windows.
+```>enter {door_name}```
+
+___Items___
+View inventory
+```>inventory```
+Take Item
+```>take {item_name}```
+Equip Item (Must be in inventory)
+```>equip {item_name}```
+See currently equiped item
+```>equip```
+
+___Attacking___
+Attack creature (with equiped item)
+```>attack {creature_name}```
+
+___Stats___
+View stats, such as health etc
+```>stats```

@@ -10,6 +10,8 @@ namespace ttocskcajBot
     class Program
     {
         static DiscordClient discord;
+        private static Game game;
+
         internal Router Router { get; set; }
         static void Main(string[] args)
         {
@@ -23,6 +25,7 @@ namespace ttocskcajBot
                 TokenType = TokenType.Bot
             });
 
+            game = Game.Instance;
 
             discord.MessageCreated += async e =>
             {

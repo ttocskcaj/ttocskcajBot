@@ -1,0 +1,11 @@
+﻿[
+  {
+    "category": "clothes",
+    "id": "blanket",
+    "movement": 0.3,
+    "warmth": 1.2,
+    "armour": 0.4,
+    "name": "Blanket",
+    "description": "A blanket. What do you think it's for..?"
+  }
+]

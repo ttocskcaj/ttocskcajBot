@@ -16,7 +16,8 @@ namespace ttocskcajBot.Commands
         public Router()
         {
             routes = new Dictionary<List<string>, IController>() {
-                {  new List<string>(){ "move" }, new RoomController() }
+                {  new List<string>(){ "new", "help" }, new GameController() }
+
             };
         }
         internal IController GetCommandController(Command command)
