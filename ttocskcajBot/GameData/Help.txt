@@ -1,5 +1,5 @@
 ﻿___Movement___
-Try inspecting some items.
+Try inspecting an area in a room.
 ```>inspect bed```
 Try moving through doors or windows.
 ```>enter {door_name}```

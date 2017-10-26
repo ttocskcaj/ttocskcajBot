@@ -51,6 +51,7 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\Controllers\IController.cs" />
     <Compile Include="Commands\Controllers\GameController.cs" />
+    <Compile Include="Commands\Controllers\AreaController.cs" />
     <Compile Include="Commands\Controllers\RoomController.cs" />
     <Compile Include="Commands\Router.cs" />
     <Compile Include="Entities\Area.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Entities\Portal.cs" />
     <Compile Include="Entities\Room.cs" />
     <Compile Include="Entities\Thing.cs" />
+    <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

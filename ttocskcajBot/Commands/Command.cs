@@ -10,7 +10,7 @@ namespace ttocskcajBot.Commands
     class Command
     {
         public string Verb { get; set; }
-        public IEntity Entity { get; set; }
+        public string Entity { get; set; }
 
         public Command()
         {
@@ -28,6 +28,10 @@ namespace ttocskcajBot.Commands
                     throw new CommandException("Commands can't be empty!");
                 case 1:
                     command.Verb = parts[0];
+                    break;
+                case 2:
+                    command.Verb = parts[0];
+                    command.Entity = parts[1];
                     break;
                 default:
                     throw new CommandException("That command is too long!");

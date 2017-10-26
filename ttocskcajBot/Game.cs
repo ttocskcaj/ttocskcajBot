@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ttocskcajBot.Entities;
+using ttocskcajBot.Exceptions;
 
 namespace ttocskcajBot
 {
@@ -14,6 +15,9 @@ namespace ttocskcajBot
         public static Game Instance { get { return lazy.Value; } }
 
         internal Room CurrentRoom { get; set; }
+
+
+
         internal Dictionary<Thing, int> Inventory { get; set; }
         internal List<Room> Rooms { get; set; }
 
@@ -42,5 +46,20 @@ namespace ttocskcajBot
             CurrentRoom = Rooms.Where(x => x.ID.Equals("dark_room")).First();
             Inventory.Clear();
         }
+
+        internal IEntity FindEntity(string entityName)
+        {
+            // Check each area in the room for the entity
+            foreach (Area area in CurrentRoom.Areas)
+            {
+                if (area.ID.Equals(entityName))
+                {
+                    return area;
+                }
+
+            }
+            throw new EntityNotFoundException(String.Format("{0} was not found!", entityName));
+        }
     }
+
 }
