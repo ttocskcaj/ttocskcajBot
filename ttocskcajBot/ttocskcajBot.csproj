@@ -53,6 +53,9 @@
     <Compile Include="Commands\Controllers\GameController.cs" />
     <Compile Include="Commands\Controllers\AreaController.cs" />
     <Compile Include="Commands\Controllers\RoomController.cs" />
+    <Compile Include="Commands\Middleware\GameRunningMiddleware.cs" />
+    <Compile Include="Commands\Middleware\IMiddleware.cs" />
+    <Compile Include="Commands\Route.cs" />
     <Compile Include="Commands\Router.cs" />
     <Compile Include="Entities\Area.cs" />
     <Compile Include="Entities\IEntity.cs" />

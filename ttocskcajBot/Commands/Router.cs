@@ -3,30 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
 using ttocskcajBot.Commands.Controllers;
+using ttocskcajBot.Commands.Middleware;
 using static ttocskcajBot.Commands.Command;
 
 namespace ttocskcajBot.Commands
 {
     internal class Router
     {
-        private Dictionary<List<string>, IController> routes;
+        private List<Route> Routes { get; set; }
 
         private static readonly Lazy<Router> lazy = new Lazy<Router>(() => new Router());
         public static Router Instance { get { return lazy.Value; } }
 
         public Router()
         {
-            routes = new Dictionary<List<string>, IController>() {
-                {  new List<string>(){ "new", "help" }, new GameController() },
-                {  new List<string>(){ "inspect" }, new AreaController() }
-
+            Routes = new List<Route>() {
+                new Route(new string[]{ "new", "help" }, new GameController()),
+                new Route(new string[]{ "inspect" }, new IMiddleware[] {new GameRunningMiddleware() }, new AreaController())
             };
         }
-        internal IController GetCommandController(Command command)
+        internal static Route GetRoute(Command command)
         {
             try
             {
-                return routes.Where(x => x.Key.Contains(command.Verb)).First().Value;
+                return Instance.Routes.Where(x => x.AcceptedCommands.Contains(command.Verb)).First();
             }
             catch (InvalidOperationException)
             {

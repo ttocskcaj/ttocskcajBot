@@ -17,8 +17,6 @@ namespace ttocskcajBot
 
         internal Room CurrentRoom { get; set; }
 
-
-
         internal Dictionary<Thing, int> Inventory { get; set; }
         internal List<Room> Rooms { get; set; }
         internal List<Thing> Things { get; set; }

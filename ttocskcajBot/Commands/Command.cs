@@ -43,9 +43,15 @@ namespace ttocskcajBot.Commands
         }
         internal string Exec()
         {
-            IController controller = Router.Instance.GetCommandController(this);
+            Route route = Router.GetRoute(this);
 
-            return controller.RunCommand(this);
+            if (route.MiddlewareBefore(this))
+            {
+                string response = route.Controller.RunCommand(this);
+                route.MiddlewareAfter(this);
+                return response;
+            }
+            else throw new CommandException("Tomato!");
         }
 
         [Serializable]

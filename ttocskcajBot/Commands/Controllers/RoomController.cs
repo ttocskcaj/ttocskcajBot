@@ -8,15 +8,12 @@ namespace ttocskcajBot.Commands
     {
         public string RunCommand(Command command)
         {
-            if (Game.Instance.IsRunning())
+            if (command.Verb.Equals("move"))
             {
-                if (command.Verb.Equals("move"))
-                {
-                    return "What direction?";
-                }
-                throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
+                return "What direction?";
             }
-            throw new GameNotRunningException(Properties.Resources.ResourceManager.GetString("gameNotRunning"));
+            throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
+
         }
 
     }

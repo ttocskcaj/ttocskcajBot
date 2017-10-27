@@ -9,24 +9,22 @@ namespace ttocskcajBot.Commands
     {
         public string RunCommand(Command command)
         {
-            if (Game.Instance.IsRunning())
+
+            if (command.Verb.Equals("inspect"))
             {
-                if (command.Verb.Equals("inspect"))
+                try
                 {
-                    try
-                    {
-                        if (command.Entity == null) throw new EntityNotFoundException("Please enter an entity to inspect!");
-                        Area area = (Area)Game.Instance.FindEntity(command.Entity);
-                        return area.Description;
-                    }
-                    catch (EntityNotFoundException ex)
-                    {
-                        return ex.Message;
-                    }
+                    if (command.Entity == null) throw new EntityNotFoundException("Please enter an entity to inspect!");
+                    Area area = (Area)Game.Instance.FindEntity(command.Entity);
+                    return area.Description;
                 }
-                throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
+                catch (EntityNotFoundException ex)
+                {
+                    return ex.Message;
+                }
             }
-            throw new GameNotRunningException(Properties.Resources.ResourceManager.GetString("gameNotRunning"));
+            throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
+
 
         }
 
