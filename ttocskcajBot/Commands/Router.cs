@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using ttocskcajBot.Commands.Controllers;
 using static ttocskcajBot.Commands.Command;
 
@@ -29,7 +30,7 @@ namespace ttocskcajBot.Commands
             }
             catch (InvalidOperationException)
             {
-                throw new CommandException("Command doesn't exist!");
+                throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
             }
 
         }

@@ -1,4 +1,5 @@
 ﻿using ttocskcajBot.Commands.Controllers;
+using ttocskcajBot.Exceptions;
 using static ttocskcajBot.Commands.Command;
 
 namespace ttocskcajBot.Commands
@@ -7,11 +8,15 @@ namespace ttocskcajBot.Commands
     {
         public string RunCommand(Command command)
         {
-            if (command.Verb.Equals("move"))
+            if (Game.Instance.IsRunning())
             {
-                return "What direction?";
+                if (command.Verb.Equals("move"))
+                {
+                    return "What direction?";
+                }
+                throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
             }
-            throw new CommandException("Command doesn't exist!");
+            throw new GameNotRunningException(Properties.Resources.ResourceManager.GetString("gameNotRunning"));
         }
 
     }

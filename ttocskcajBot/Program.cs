@@ -36,7 +36,7 @@ namespace ttocskcajBot
                         string response = Command.ParseMessage(e.Message).Exec();
                         await e.Message.RespondAsync(response);
                     }
-                    catch (CommandException ex)
+                    catch (Exception ex)
                     {
                         await e.Message.RespondAsync(ex.Message);
                     }

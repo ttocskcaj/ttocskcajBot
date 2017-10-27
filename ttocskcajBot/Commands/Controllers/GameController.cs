@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using ttocskcajBot.Commands.Controllers;
+using ttocskcajBot.Exceptions;
 using static ttocskcajBot.Commands.Command;
 
 namespace ttocskcajBot.Commands
@@ -8,6 +9,7 @@ namespace ttocskcajBot.Commands
     {
         public string RunCommand(Command command)
         {
+
             if (command.Verb.Equals("new"))
             {
                 Game.Instance.NewGame();
@@ -17,7 +19,7 @@ namespace ttocskcajBot.Commands
             {
                 return File.ReadAllText("GameData/Help.txt");
             }
-            throw new CommandException("Command doesn't exist!");
+            throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
         }
 
     }

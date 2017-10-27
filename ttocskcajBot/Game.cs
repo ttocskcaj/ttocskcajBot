@@ -46,6 +46,11 @@ namespace ttocskcajBot
             CurrentRoom = Rooms.Where(x => x.ID.Equals("dark_room")).First();
             Inventory.Clear();
         }
+        internal bool IsRunning()
+        {
+            return (CurrentRoom != null);
+
+        }
 
         internal IEntity FindEntity(string entityName)
         {

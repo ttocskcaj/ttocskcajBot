@@ -44,6 +44,7 @@ namespace ttocskcajBot.Commands
         internal string Exec()
         {
             IController controller = Router.Instance.GetCommandController(this);
+
             return controller.RunCommand(this);
         }
 
