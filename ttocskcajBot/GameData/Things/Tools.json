@@ -1,8 +1,9 @@
 ﻿[
   {
     "category": "tools",
-    "id": "match_box",
+    "id": "matchbox",
     "name": "Box of matches",
-    "description":  "A box of matches. Good for lighting fires or torches."
+    "description": "A box of matches. Good for lighting fires or torches.",
+    "uses":  10
   }
 ]

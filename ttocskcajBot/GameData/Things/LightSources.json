@@ -1,0 +1,11 @@
+﻿[
+  {
+    "category": "LightSource",
+    "id": "fireplace",
+    "light": 0.4,
+    "name": "Fireplace",
+    "description": "A brick fireplace. Light it for warmth and light.",
+    "defaultState" :  1
+  }
+
+]

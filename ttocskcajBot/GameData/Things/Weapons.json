@@ -3,7 +3,8 @@
     "category": "weapons",
     "id": "rusty_bar",
     "type": "melee",
-    "damage": 0.3,
+    "attack": 0.3,
+    "movement" :  -0.1,
     "name": "Rusty Bar",
     "description": "A short, rusty iron bar. Good for hitting things with."
   }

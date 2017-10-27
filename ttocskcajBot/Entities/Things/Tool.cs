@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ttocskcajBot.Entities
+namespace ttocskcajBot.Entities.Things
 {
-    class Thing
+    class Tool : Thing
     {
+        public int Uses { get; set; }
     }
 }

@@ -58,7 +58,12 @@
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\Portal.cs" />
     <Compile Include="Entities\Room.cs" />
-    <Compile Include="Entities\Thing.cs" />
+    <Compile Include="Entities\Things\Weapon.cs" />
+    <Compile Include="Entities\Things\LightSource.cs" />
+    <Compile Include="Entities\Things\Thing.cs" />
+    <Compile Include="Entities\Things\ThingReferenceResolver.cs" />
+    <Compile Include="Entities\Things\Armour.cs" />
+    <Compile Include="Entities\Things\Tool.cs" />
     <Compile Include="Exceptions\EntityExceptions.cs" />
     <Compile Include="Exceptions\GameExceptions.cs" />
     <Compile Include="Game.cs" />
@@ -72,10 +77,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="GameData\Things\Clothes.json">
+    <None Include="GameData\Things\Armours.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GameData\Things\Misc.json">
+    <None Include="GameData\Things\LightSources.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="GameData\Things\Tools.json">

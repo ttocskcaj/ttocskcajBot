@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ttocskcajBot.Entities;
+using ttocskcajBot.Entities.Things;
 using ttocskcajBot.Exceptions;
 
 namespace ttocskcajBot
@@ -20,21 +21,33 @@ namespace ttocskcajBot
 
         internal Dictionary<Thing, int> Inventory { get; set; }
         internal List<Room> Rooms { get; set; }
+        internal List<Thing> Things { get; set; }
 
         public Game()
         {
             Rooms = new List<Room>();
+            Things = new List<Thing>();
             Inventory = new Dictionary<Thing, int>();
             LoadGameData();
         }
 
         private void LoadGameData()
         {
-            string sourceDirectory = "GameData/Rooms";
-            foreach (string file in Directory.EnumerateFiles(sourceDirectory, "*.json", SearchOption.AllDirectories))
+            // Load thing data.
+            Things.AddRange(JsonConvert.DeserializeObject<List<LightSource>>(File.ReadAllText("GameData/Things/LightSources.json")));
+            Things.AddRange(JsonConvert.DeserializeObject<List<Tool>>(File.ReadAllText("GameData/Things/Tools.json")));
+            Things.AddRange(JsonConvert.DeserializeObject<List<Armour>>(File.ReadAllText("GameData/Things/Armours.json")));
+            Things.AddRange(JsonConvert.DeserializeObject<List<Weapon>>(File.ReadAllText("GameData/Things/Weapons.json")));
+
+            // Load room data.
+            var jsonSerializerSettings = new JsonSerializerSettings()
             {
-                string contents = File.ReadAllText(file);
-                Rooms.Add(JsonConvert.DeserializeObject<Room>(contents));
+                ReferenceResolverProvider = () => new ThingReferenceResolver(Things)
+            };
+            foreach (string file in Directory.EnumerateFiles("GameData/Rooms", "*.json", SearchOption.AllDirectories))
+            {
+                Room room = JsonConvert.DeserializeObject<Room>(File.ReadAllText(file),jsonSerializerSettings);
+                Rooms.Add(room);
             }
         }
         internal void NewGame()
