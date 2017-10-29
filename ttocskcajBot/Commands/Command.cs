@@ -20,7 +20,7 @@ namespace ttocskcajBot.Commands
         {
             Console.WriteLine(String.Format("Player command: <{0}> {1}", message.Author.Username, message.Content));
 
-            string commandString = message.Content.TrimStart('>');
+            string commandString = message.Content.TrimStart('.');
             string[] parts = commandString.Split(new[] { ' ' }, 2);
 
             Command command = new Command();

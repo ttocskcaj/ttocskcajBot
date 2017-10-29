@@ -29,7 +29,7 @@ namespace ttocskcajBot
 
             discord.MessageCreated += async e =>
             {
-                if (e.Message.Content.StartsWith(">"))
+                if (e.Message.Content.StartsWith("."))
                 {
                     try
                     {
@@ -38,6 +38,7 @@ namespace ttocskcajBot
                     }
                     catch (Exception ex)
                     {
+                        Console.Write(ex.StackTrace);
                         await e.Message.RespondAsync(ex.Message);
                     }
                 }
