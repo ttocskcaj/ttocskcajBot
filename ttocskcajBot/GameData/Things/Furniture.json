@@ -1,0 +1,23 @@
+﻿[
+  {
+    "category": "Furniture",
+    "id": "brick_fire",
+    "lightLevel": 0.4,
+    "name": "Brick Fire",
+    "alternativeTerms": ["fire", "fireplace", "fire_place"],
+    "description": "A brick fire. Light it for warmth and light.",
+    "state": 0,
+    "canTake": false
+  },
+  {
+    "category": "Furniture",
+    "id": "small_window",
+    "lightLevel": 0.1,
+    "name": "Small Window",
+    "alternativeTerms": [ "window", "dirty_window"],
+    "description": "A small dirty window. Much too small to fit through.",
+    "state": 1,
+    "canTake": false
+  }
+
+]

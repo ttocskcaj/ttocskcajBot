@@ -20,7 +20,7 @@ namespace ttocskcajBot.Entities
             Thing thing = things.Where(x => x.ID.Equals(reference)).First();
             if (thing != null)
             {
-                return thing;
+                return thing.Clone();
             }
 
             return null;

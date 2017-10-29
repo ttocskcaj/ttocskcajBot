@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using ttocskcajBot.Commands.Controllers;
 using ttocskcajBot.Exceptions;
 using static ttocskcajBot.Commands.Command;
@@ -9,11 +10,10 @@ namespace ttocskcajBot.Commands
     {
         public string RunCommand(Command command)
         {
-
             if (command.Verb.Equals("new"))
             {
                 Game.Instance.NewGame();
-                return Game.Instance.CurrentRoom.Description;
+                return Game.Instance.CurrentRoom.GetCurrentDescription();
             }
             if (command.Verb.Equals("help"))
             {

@@ -1,7 +1,16 @@
 ﻿{
   "id": "dark_room",
   "name": "Dark Room",
-  "description": "You awake in the dark. The air is chilly and damp, and you can hear water slowly trickling in the distance. You have no idea how you got here, but suspect the Gerds had something to do with it.\nBy the limited light coming through a small window high on a wall, you can make out the outline of a fireplace and a bed.",
+  "descriptions": [
+    {
+      "minLightLevel": 0.1,
+      "message": "You awake in the dark. The air is chilly and damp, and you can hear water slowly trickling in the distance. You have no idea how you got here, but suspect the Gerds had something to do with it.\nBy the low moonlight streaming through a small window high on a wall, you can make out the outline of a fireplace and a bed."
+    },
+    {
+      "minLightLevel": 0.5,
+      "message": "You're in a small damp room. The walls appear to be roughly cut stone, and the floor is mossey and damp.\n There is a small rusty bed in one corner and a fireplace crackling against the wall oposite. Moonlight is streaming in through a small window high on the wall above the bed, you can just make out a stone door set into the wall next to the bed."
+    }
+  ],
   "areas": [
     {
       "id": "fireplace",
@@ -10,10 +19,9 @@
       "things": [
         {
           "$ref": "matchbox"
-
         },
         {
-          "$ref": "fireplace"
+          "$ref": "brick_fire"
         }
       ]
     },
@@ -27,6 +35,9 @@
         },
         {
           "$ref": "blanket"
+        },
+        {
+          "$ref": "small_window"
         }
       ]
     }

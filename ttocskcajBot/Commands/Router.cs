@@ -19,7 +19,9 @@ namespace ttocskcajBot.Commands
         {
             Routes = new List<Route>() {
                 new Route(new string[]{ "new", "help" }, new GameController()),
-                new Route(new string[]{ "inspect" }, new IMiddleware[] {new GameRunningMiddleware() }, new AreaController())
+                new Route(new string[]{ "inspect" }, new IMiddleware[] {new GameRunningMiddleware() }, new AreaController()),
+                new Route(new string[]{ "take" }, new IMiddleware[] {new GameRunningMiddleware() }, new ThingController()),
+                new Route(new string[]{ "inventory", "drop", "equip" }, new IMiddleware[] {new GameRunningMiddleware() }, new InventoryController())
             };
         }
         internal static Route GetRoute(Command command)

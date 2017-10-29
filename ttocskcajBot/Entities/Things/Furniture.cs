@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace ttocskcajBot.Entities.Things
 {
-    class LightSource : Thing
+    class Furniture : Thing
     {
-        public float Light { get; set; }
-        public int DefaultState { get; set; }
     }
 }

@@ -5,6 +5,9 @@ using static ttocskcajBot.Commands.Command;
 
 namespace ttocskcajBot.Commands
 {
+    /// <summary>
+    /// Runs commands that have to do with Areas
+    /// </summary>
     internal class AreaController : IController
     {
         public string RunCommand(Command command)
@@ -12,17 +15,17 @@ namespace ttocskcajBot.Commands
 
             if (command.Verb.Equals("inspect"))
             {
-                try
+                // Try and get an Area entity from the command.
+                if (command.Entity == null) throw new EntityNotFoundException("Please enter an entity to inspect!");
+                Area area = (Area)Game.Instance.FindEntity(command.Entity, "Area");
+
+                foreach (Thing thing in area.Things)
                 {
-                    if (command.Entity == null) throw new EntityNotFoundException("Please enter an entity to inspect!");
-                    Area area = (Area)Game.Instance.FindEntity(command.Entity);
-                    return area.Description;
+                    thing.Discovered = true;
                 }
-                catch (EntityNotFoundException ex)
-                {
-                    return ex.Message;
-                }
+                return area.Description;
             }
+            // That command doesn't exist on this controller.
             throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
 
 

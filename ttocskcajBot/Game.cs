@@ -17,7 +17,7 @@ namespace ttocskcajBot
 
         internal Room CurrentRoom { get; set; }
 
-        internal Dictionary<Thing, int> Inventory { get; set; }
+        internal Inventory Inventory { get; set; }
         internal List<Room> Rooms { get; set; }
         internal List<Thing> Things { get; set; }
 
@@ -25,14 +25,14 @@ namespace ttocskcajBot
         {
             Rooms = new List<Room>();
             Things = new List<Thing>();
-            Inventory = new Dictionary<Thing, int>();
+            Inventory = new Inventory();
             LoadGameData();
         }
 
         private void LoadGameData()
         {
             // Load thing data.
-            Things.AddRange(JsonConvert.DeserializeObject<List<LightSource>>(File.ReadAllText("GameData/Things/LightSources.json")));
+            Things.AddRange(JsonConvert.DeserializeObject<List<Furniture>>(File.ReadAllText("GameData/Things/Furniture.json")));
             Things.AddRange(JsonConvert.DeserializeObject<List<Tool>>(File.ReadAllText("GameData/Things/Tools.json")));
             Things.AddRange(JsonConvert.DeserializeObject<List<Armour>>(File.ReadAllText("GameData/Things/Armours.json")));
             Things.AddRange(JsonConvert.DeserializeObject<List<Weapon>>(File.ReadAllText("GameData/Things/Weapons.json")));
@@ -44,10 +44,23 @@ namespace ttocskcajBot
             };
             foreach (string file in Directory.EnumerateFiles("GameData/Rooms", "*.json", SearchOption.AllDirectories))
             {
-                Room room = JsonConvert.DeserializeObject<Room>(File.ReadAllText(file),jsonSerializerSettings);
+                Room room = JsonConvert.DeserializeObject<Room>(File.ReadAllText(file), jsonSerializerSettings);
                 Rooms.Add(room);
             }
         }
+
+        internal static void RemoveFromRoom(Thing thing)
+        {
+            foreach (Area area in Instance.CurrentRoom.Areas)
+            {
+                if (area.Things.Contains(thing))
+                {
+                    area.Things.Remove(thing);
+                    break;
+                }
+            }
+        }
+
         internal void NewGame()
         {
             if (Rooms.Count < 1)
@@ -63,20 +76,27 @@ namespace ttocskcajBot
 
         }
 
-        internal IEntity FindEntity(string entityName)
+        internal IEntity FindEntity(string entityName, string type)
         {
             entityName = entityName.ToLower().Replace(' ', '_');
             // Check each area in the room for the entity
             foreach (Area area in CurrentRoom.Areas)
             {
-                if (area.ID.Equals(entityName))
+                foreach (Thing thing in area.Things)
+                {
+                    if (thing.ID.Equals(entityName) && type == "Thing")
+                    {
+                        return thing;
+                    }
+                }
+                if (area.ID.Equals(entityName) && type == "Area")
                 {
                     return area;
                 }
-
             }
             throw new EntityNotFoundException(String.Format("{0} was not found!", entityName));
         }
+
     }
 
 }

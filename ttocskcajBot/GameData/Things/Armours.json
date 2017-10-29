@@ -5,6 +5,9 @@
     "movement": -0.3,
     "defense": 0.4,
     "name": "Blanket",
-    "description": "A blanket. What do you think it's for..?"
+    "alternativeTerms": [ "old_blanket" ],
+    "description": "A blanket. What do you think it's for..?",
+    "equippedMessage": "You start to feel warmer, and slightly less exposed to attacks.",
+    "canTake": true
   }
 ]
