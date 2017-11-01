@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ttocskcajBot.Entities
+namespace ttocskcajBot.Entities.Things
 {
-    class Thing : IEntity, ICloneable
+    internal class Thing : IEntity, ICloneable
     {
-        public string ID {get; set;}
+        public string ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
@@ -20,7 +16,7 @@ namespace ttocskcajBot.Entities
 
         internal bool IsLightSource()
         {
-            return (State > 0 && LightLevel > 0);
+            return State > 0 && LightLevel > 0;
         }
 
         public Thing()
@@ -30,7 +26,7 @@ namespace ttocskcajBot.Entities
 
         public object Clone()
         {
-            return this.MemberwiseClone();
+            return MemberwiseClone();
         }
     }
 }

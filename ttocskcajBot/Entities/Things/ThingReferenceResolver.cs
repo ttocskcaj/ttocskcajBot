@@ -1,29 +1,21 @@
-﻿using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Serialization;
 
-namespace ttocskcajBot.Entities
+namespace ttocskcajBot.Entities.Things
 {
     internal class ThingReferenceResolver : IReferenceResolver
     {
-        private List<Thing> things;
+        private readonly List<Thing> _things;
 
         internal ThingReferenceResolver(List<Thing> things)
         {
-            this.things = things;
+            _things = things;
         }
         public object ResolveReference(object context, string reference)
         {
-            Thing thing = things.Where(x => x.ID.Equals(reference)).First();
-            if (thing != null)
-            {
-                return thing.Clone();
-            }
-
-            return null;
+            Thing thing = _things.First(x => x.ID.Equals(reference));
+            return thing?.Clone();
         }
 
         public string GetReference(object context, object value)
@@ -36,12 +28,12 @@ namespace ttocskcajBot.Entities
         {
             Thing thing = (Thing)value;
 
-            return things.Contains(thing);
+            return _things.Contains(thing);
         }
 
         public void AddReference(object context, string reference, object value)
         {
-            things.Add((Thing)value);
+            _things.Add((Thing)value);
         }
     }
 }

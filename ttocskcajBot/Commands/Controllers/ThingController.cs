@@ -1,10 +1,7 @@
-﻿using System;
-using ttocskcajBot.Commands.Controllers;
-using ttocskcajBot.Entities;
+﻿using ttocskcajBot.Entities.Things;
 using ttocskcajBot.Exceptions;
-using static ttocskcajBot.Commands.Command;
 
-namespace ttocskcajBot.Commands
+namespace ttocskcajBot.Commands.Controllers
 {
     /// <summary>
     /// Runs commands that have to do with Areas
@@ -18,17 +15,13 @@ namespace ttocskcajBot.Commands
             if (command.Entity == null) throw new EntityNotFoundException("Please enter an entity to take!");
             Thing thing = (Thing)Game.Instance.FindEntity(command.Entity, "Thing");
 
-            if (thing.CanTake)
-            {
-                if (thing.Discovered)
-                {
-                    Game.Instance.Inventory.AddThing(thing);
-                    Game.RemoveFromRoom(thing);
-                    return  new CommandResponse(String.Format("Added {0} to inventory", thing.Name));
-                }
-                throw new EntityNotFoundException(String.Format("{0} wasn't found. Have a look around for it first.", thing.Name));
-            }
-            throw new CommandException(String.Format("Don't be silly! {0} is too heavy to carry!", thing.Name));
+            if (!thing.CanTake)
+                throw new CommandException($"Don't be silly! {thing.Name} is too heavy to carry!");
+            if (!thing.Discovered)
+                throw new EntityNotFoundException($"{thing.Name} wasn't found. Have a look around for it first.");
+            Game.Instance.Inventory.AddThing(thing);
+            Game.RemoveFromRoom(thing);
+            return  new CommandResponse($"Added {thing.Name} to inventory");
         }
 
     }

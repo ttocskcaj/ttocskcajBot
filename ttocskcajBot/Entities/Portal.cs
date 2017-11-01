@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ttocskcajBot.Entities
+﻿namespace ttocskcajBot.Entities
 {
-    class Portal
+    internal class Portal
     {
     }
 }

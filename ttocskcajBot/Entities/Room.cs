@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ttocskcajBot.Entities
 {
-    class Room
+    internal class Room
     {
         public List<Portal> Portals { get; set; }
         public List<Area> Areas { get; set; }
@@ -14,18 +13,9 @@ namespace ttocskcajBot.Entities
 
         public double GetLightLevel()
         {
-            double lightLevel = 0;
-            foreach (Area area in Areas)
-            {
-                foreach (Thing thing in area.Things)
-                {
-                    if (thing.IsLightSource())
-                    {
-                        lightLevel += thing.LightLevel;
-                    }
-                }
-            }
-            return lightLevel;
+            return Areas.SelectMany(area => area.Things, (area, thing) => new {area, thing})
+                .Where(x => x.thing.IsLightSource())
+                .Select(x => x.thing.LightLevel).Sum();
         }
 
         internal string GetCurrentDescription()

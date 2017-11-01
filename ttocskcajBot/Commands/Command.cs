@@ -1,34 +1,23 @@
-﻿using DSharpPlus.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using ttocskcajBot.Commands.Controllers;
-using ttocskcajBot.Entities;
+﻿using System;
+using DSharpPlus.Entities;
 using ttocskcajBot.Exceptions;
 
 namespace ttocskcajBot.Commands
 {
-    class Command
+    internal class Command
     {
         public string Verb { get; set; }
         public string Entity { get; set; }
         public DiscordMessage DiscordMessage { get; set; }
 
-        public EventHandler<CommandEventArgs> CommandIssued { get; set; }
-
-        public Command()
-        {
-        }
-
         internal static Command ParseMessage(DiscordMessage discordMessage)
         {
-            Console.WriteLine(String.Format("Player command: <{0}> {1}", discordMessage.Author.Username, discordMessage.Content));
+            Console.WriteLine($"Player command: <{discordMessage.Author.Username}> {discordMessage.Content}");
 
             string commandString = discordMessage.Content.TrimStart('.');
             string[] parts = commandString.Split(new[] { ' ' }, 2);
 
-            Command command = new Command();
-            command.DiscordMessage = discordMessage;
+            Command command = new Command {DiscordMessage = discordMessage};
             switch (parts.Length)
             {
                 case 0:
@@ -46,18 +35,7 @@ namespace ttocskcajBot.Commands
 
             return command;
         }
-        internal void Exec()
-        {
-            OnCommandIssued(this);
-        }
-        protected virtual void OnCommandIssued(Command command)
-        {
-            EventHandler<CommandEventArgs> handler = CommandIssued;
-            if (handler != null)
-            {
-                handler(this, new CommandEventArgs() { Command = command });
-            }
-        }
+
     }
 
     internal class CommandEventArgs

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using ttocskcajBot.Commands.Controllers;
-using ttocskcajBot.Entities;
+using ttocskcajBot.Entities.Things;
 using ttocskcajBot.Exceptions;
-using static ttocskcajBot.Commands.Command;
 
-namespace ttocskcajBot.Commands
+namespace ttocskcajBot.Commands.Controllers
 {
     /// <summary>
     /// Runs commands that have to do with Areas
@@ -23,7 +20,7 @@ namespace ttocskcajBot.Commands
                 // Add each item to the response string.
                 foreach (KeyValuePair<Thing, int> thing in Game.Instance.Inventory.Items)
                 {
-                    response += String.Format("{0}:\t{1}", thing.Value, thing.Key.Name);
+                    response += $"{thing.Value}:\t{thing.Key.Name}";
                     response += "\n";
                 }
                 // Add any equipped items to the response string.
@@ -32,7 +29,7 @@ namespace ttocskcajBot.Commands
                 response += "```\n";
                 if (Game.Instance.Inventory.EquippedArmour != null)
                 {
-                    response += String.Format("Armour:\t{0}\n", Game.Instance.Inventory.EquippedArmour.Name);
+                    response += $"Armour:\t{Game.Instance.Inventory.EquippedArmour.Name}\n";
                 }
                 else
                 {
@@ -41,7 +38,7 @@ namespace ttocskcajBot.Commands
 
                 if (Game.Instance.Inventory.EquippedTool != null)
                 {
-                    response += String.Format("Tool:\t{0}\n", Game.Instance.Inventory.EquippedTool.Name);
+                    response += $"Tool:\t{Game.Instance.Inventory.EquippedTool.Name}\n";
                 }
                 else
                 {
@@ -50,7 +47,7 @@ namespace ttocskcajBot.Commands
 
                 if (Game.Instance.Inventory.EquippedWeapon != null)
                 {
-                    response += String.Format("Weapon:\t{0}\n", Game.Instance.Inventory.EquippedWeapon.Name);
+                    response += $"Weapon:\t{Game.Instance.Inventory.EquippedWeapon.Name}\n";
                 }
                 else
                 {
@@ -72,28 +69,26 @@ namespace ttocskcajBot.Commands
         public static CommandResponse Drop(Command command)
         {
             string thingID = command.Entity.ToLower().Replace(' ', '_');
-            if (Game.Instance.Inventory.ContainsThing(thingID))
+            if (!Game.Instance.Inventory.ContainsThing(thingID))
+                throw new EntityNotFoundException($"You don't have {command.Entity}");
+            Thing thing = Game.Instance.Inventory.GetThing(thingID);
+            Game.Instance.CurrentRoom.Areas.First().Things.Add(thing);
+
+            if (Game.Instance.Inventory.EquippedArmour == thing)
             {
-                Thing thing = Game.Instance.Inventory.GetThing(thingID);
-                Game.Instance.CurrentRoom.Areas.First().Things.Add(thing);
-
-                if (Game.Instance.Inventory.EquippedArmour == thing)
-                {
-                    Game.Instance.Inventory.EquippedArmour = null;
-                }
-                if (Game.Instance.Inventory.EquippedTool == thing)
-                {
-                    Game.Instance.Inventory.EquippedTool = null;
-                }
-                if (Game.Instance.Inventory.EquippedWeapon == thing)
-                {
-                    Game.Instance.Inventory.EquippedWeapon = null;
-                }
-
-                Game.Instance.Inventory.RemoveThing(thingID);
-                return new CommandResponse(String.Format("Dropped {0}", thing.Name));
+                Game.Instance.Inventory.EquippedArmour = null;
             }
-            throw new EntityNotFoundException(String.Format("You don't have {0}", command.Entity));
+            if (Game.Instance.Inventory.EquippedTool == thing)
+            {
+                Game.Instance.Inventory.EquippedTool = null;
+            }
+            if (Game.Instance.Inventory.EquippedWeapon == thing)
+            {
+                Game.Instance.Inventory.EquippedWeapon = null;
+            }
+
+            Game.Instance.Inventory.RemoveThing(thingID);
+            return new CommandResponse($"Dropped {thing.Name}");
         }
         public static CommandResponse Equip(Command command)
         {

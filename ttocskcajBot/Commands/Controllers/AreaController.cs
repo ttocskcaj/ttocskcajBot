@@ -1,10 +1,8 @@
-﻿using System;
-using ttocskcajBot.Commands.Controllers;
-using ttocskcajBot.Entities;
+﻿using ttocskcajBot.Entities;
+using ttocskcajBot.Entities.Things;
 using ttocskcajBot.Exceptions;
-using static ttocskcajBot.Commands.Command;
 
-namespace ttocskcajBot.Commands
+namespace ttocskcajBot.Commands.Controllers
 {
     /// <summary>
     /// Runs commands that have to do with Areas

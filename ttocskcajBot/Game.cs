@@ -1,19 +1,21 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using ttocskcajBot.Entities;
 using ttocskcajBot.Entities.Things;
 using ttocskcajBot.Exceptions;
 
 namespace ttocskcajBot
 {
+    [SuppressMessage("ReSharper", "InvertIf")]
     internal class Game
     {
 
-        private static readonly Lazy<Game> lazy = new Lazy<Game>(() => new Game());
-        public static Game Instance { get { return lazy.Value; } }
+        private static readonly Lazy<Game> Lazy = new Lazy<Game>(() => new Game());
+        public static Game Instance => Lazy.Value;
 
         internal Room CurrentRoom { get; set; }
 
@@ -38,7 +40,7 @@ namespace ttocskcajBot
             Things.AddRange(JsonConvert.DeserializeObject<List<Weapon>>(File.ReadAllText("GameData/Things/Weapons.json")));
 
             // Load room data.
-            var jsonSerializerSettings = new JsonSerializerSettings()
+            JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
             {
                 ReferenceResolverProvider = () => new ThingReferenceResolver(Things)
             };
@@ -67,12 +69,12 @@ namespace ttocskcajBot
             {
                 LoadGameData();
             }
-            CurrentRoom = Rooms.Where(x => x.ID.Equals("dark_room")).First();
+            CurrentRoom = Rooms.First(x => x.ID.Equals("dark_room"));
             Inventory.Clear();
         }
         internal bool IsRunning()
         {
-            return (CurrentRoom != null);
+            return CurrentRoom != null;
 
         }
 
@@ -94,7 +96,7 @@ namespace ttocskcajBot
                     return area;
                 }
             }
-            throw new EntityNotFoundException(String.Format("{0} was not found!", entityName));
+            throw new EntityNotFoundException($"{entityName} was not found!");
         }
 
     }

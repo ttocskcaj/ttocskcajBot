@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ttocskcajBot.Entities;
 using ttocskcajBot.Entities.Things;
 using ttocskcajBot.Exceptions;
-using static ttocskcajBot.Commands.Command;
 
 namespace ttocskcajBot
 {
-    class Inventory
+    internal class Inventory
     {
         // Inventory items {thing, qty}
         internal Dictionary<Thing, int> Items { get; set; }
@@ -39,12 +35,12 @@ namespace ttocskcajBot
             }
         }
 
-        internal bool ContainsThing(String thingID)
+        internal bool ContainsThing(string thingID)
         {
-            return (Items.Where(item => item.Key.ID.Equals(thingID)).ToDictionary(x => x.Key, y => y.Value).Count > 0);
+            return Items.Where(item => item.Key.ID.Equals(thingID)).ToDictionary(x => x.Key, y => y.Value).Count > 0;
         }
 
-        internal void RemoveThing(String thingID)
+        internal void RemoveThing(string thingID)
         {
             if (ContainsThing(thingID))
             {
@@ -61,23 +57,21 @@ namespace ttocskcajBot
             }
             else
             {
-                throw new EntityNotFoundException(String.Format("{0} wasn't found in your inventory!", thingID));
+                throw new EntityNotFoundException($"{thingID} wasn't found in your inventory!");
 
             }
         }
 
-        internal Thing GetThing(String thingID)
+        internal Thing GetThing(string thingID)
         {
-            if (ContainsThing(thingID))
-            {
-                KeyValuePair<Thing, int> invEntry = Items.Where(item => item.Key.ID.Equals(thingID)).ToDictionary(x => x.Key, y => y.Value).First();
-                return invEntry.Key;
+            if (!ContainsThing(thingID))
+                throw new EntityNotFoundException($"{thingID} wasn't found in your inventory!");
 
-            }
-            throw new EntityNotFoundException(String.Format("{0} wasn't found in your inventory!", thingID));
+            KeyValuePair<Thing, int> invEntry = Items.Where(item => item.Key.ID.Equals(thingID)).ToDictionary(x => x.Key, y => y.Value).First();
+            return invEntry.Key;
         }
 
-        internal string EquipThing(String thingID)
+        internal string EquipThing(string thingID)
         {
             Thing thing = GetThing(thingID);
             Console.WriteLine(thing.GetType().Name);

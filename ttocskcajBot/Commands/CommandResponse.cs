@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ttocskcajBot.Commands
 {
-    class CommandResponse
+    internal class CommandResponse
     {
-        private string messageResponse;
         public string MessageResponse { get; set; }
 
         public CommandResponse(string messageResponse )

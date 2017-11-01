@@ -1,35 +1,33 @@
 ﻿using System;
-using DSharpPlus;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+using DSharpPlus;
 using ttocskcajBot.Commands;
-using static ttocskcajBot.Commands.Command;
-using static ttocskcajBot.Commands.RouteAction;
+using ttocskcajBot.Commands.Controllers;
 
 namespace ttocskcajBot
 {
-    class Program
+    internal class Program
     {
-        static DiscordClient discord;
-        private static Game game;
+        private static DiscordClient _discord;
 
         internal Router Router { get; set; }
-        static void Main(string[] args)
+
+        private static void Main()
         {
-            MainAsync(args).ConfigureAwait(false).GetAwaiter().GetResult();
+            MainAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
-        static async Task MainAsync(string[] args)
+
+        private static async Task MainAsync()
         {
-            discord = new DiscordClient(new DiscordConfiguration
+            _discord = new DiscordClient(new DiscordConfiguration
             {
                 Token = "MzY2ODcwMjYxNzk2MTc1ODc1.DLzKLQ.oq9i7LxSWhAFMufTBiqZlWS_oUQ",
                 TokenType = TokenType.Bot
             });
 
-            game = Game.Instance;
             SetupRoutes();
 
-            discord.MessageCreated += async e =>
+            _discord.MessageCreated += async e =>
             {
                 if (e.Message.Content.StartsWith("."))
                 {
@@ -48,26 +46,27 @@ namespace ttocskcajBot
                 }
             };
 
-            await discord.ConnectAsync();
+            await _discord.ConnectAsync();
             await Task.Delay(-1);
 
         }
-        static void SetupRoutes()
+
+        private static void SetupRoutes()
         {
             // Game control routes
-            Router.AddRoute("new", new RouteAction(new ActionDelegate(GameController.New)));
-            Router.AddRoute("help", new RouteAction(new ActionDelegate(GameController.Help)));
+            Router.AddRoute("new", new RouteAction(GameController.New));
+            Router.AddRoute("help", new RouteAction(GameController.Help));
 
             // Area routes
-            Router.AddRoute("inspect", new RouteAction(new ActionDelegate(AreaController.Inspect)));
+            Router.AddRoute("inspect", new RouteAction(AreaController.Inspect));
 
             // Thing interaction routes
-            Router.AddRoute("take", new RouteAction(new ActionDelegate(ThingController.Take)));
+            Router.AddRoute("take", new RouteAction(ThingController.Take));
 
             // Inventory routes.
-            Router.AddRoute("inventory", new RouteAction(new ActionDelegate(InventoryController.Inventory)));
-            Router.AddRoute("drop", new RouteAction(new ActionDelegate(InventoryController.Drop)));
-            Router.AddRoute("equip", new RouteAction(new ActionDelegate(InventoryController.Equip)));
+            Router.AddRoute("inventory", new RouteAction(InventoryController.Inventory));
+            Router.AddRoute("drop", new RouteAction(InventoryController.Drop));
+            Router.AddRoute("equip", new RouteAction(InventoryController.Equip));
         }
     }
 }

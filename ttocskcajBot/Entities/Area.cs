@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using ttocskcajBot.Entities.Things;
 
 namespace ttocskcajBot.Entities
 {
-    class Area : IEntity
+    internal class Area : IEntity
     {
         public List<Thing> Things { get; set; }
         public string Description { get; set; }

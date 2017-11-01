@@ -1,8 +1,7 @@
-﻿using ttocskcajBot.Commands.Controllers;
-using ttocskcajBot.Exceptions;
-using static ttocskcajBot.Commands.Command;
+﻿using ttocskcajBot.Exceptions;
+using ttocskcajBot.Properties;
 
-namespace ttocskcajBot.Commands
+namespace ttocskcajBot.Commands.Controllers
 {
     internal class RoomController : IController
     {
@@ -12,7 +11,7 @@ namespace ttocskcajBot.Commands
             {
                 return "What direction?";
             }
-            throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
+            throw new CommandException(Resources.ResourceManager.GetString("commandNotFound"));
 
         }
 

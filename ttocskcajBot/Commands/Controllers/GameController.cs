@@ -1,10 +1,6 @@
 ﻿using System.IO;
-using System.Linq;
-using ttocskcajBot.Commands.Controllers;
-using ttocskcajBot.Exceptions;
-using static ttocskcajBot.Commands.Command;
 
-namespace ttocskcajBot.Commands
+namespace ttocskcajBot.Commands.Controllers
 {
     internal class GameController : IController
     {

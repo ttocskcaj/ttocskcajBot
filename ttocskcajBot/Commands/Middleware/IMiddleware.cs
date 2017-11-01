@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ttocskcajBot.Commands.Middleware
+﻿namespace ttocskcajBot.Commands.Middleware
 {
-    interface IMiddleware
+    internal interface IMiddleware
     {
         bool Before(Command command);
 

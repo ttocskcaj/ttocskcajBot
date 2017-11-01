@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ttocskcajBot.Exceptions;
+﻿using ttocskcajBot.Exceptions;
+using ttocskcajBot.Properties;
 
 namespace ttocskcajBot.Commands.Middleware
 {
-    class GameRunningMiddleware : IMiddleware
+    internal class GameRunningMiddleware : IMiddleware
     {
         public bool After(Command command)
         {
@@ -18,7 +14,7 @@ namespace ttocskcajBot.Commands.Middleware
         {
             // Ensures the game is running before executing a command.
             if (Game.Instance.IsRunning()) return true;
-            else throw new GameNotRunningException(Properties.Resources.ResourceManager.GetString("gameNotRunning"));
+            throw new GameNotRunningException(Resources.ResourceManager.GetString("gameNotRunning"));
         }
     }
 }
