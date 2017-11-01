@@ -11,31 +11,24 @@ namespace ttocskcajBot.Commands
     /// </summary>
     internal class ThingController : IController
     {
-        public string RunCommand(Command command)
+        public static CommandResponse Take(Command command)
         {
 
-            if (command.Verb.Equals("take"))
+            // Try and get an Thing entity from the command.
+            if (command.Entity == null) throw new EntityNotFoundException("Please enter an entity to take!");
+            Thing thing = (Thing)Game.Instance.FindEntity(command.Entity, "Thing");
+
+            if (thing.CanTake)
             {
-                // Try and get an Thing entity from the command.
-                if (command.Entity == null) throw new EntityNotFoundException("Please enter an entity to take!");
-                Thing thing = (Thing)Game.Instance.FindEntity(command.Entity, "Thing");
-
-                if (thing.CanTake)
+                if (thing.Discovered)
                 {
-                    if (thing.Discovered)
-                    {
-                        Game.Instance.Inventory.AddThing(thing);
-                        Game.RemoveFromRoom(thing);
-                        return String.Format("Added {0} to inventory", thing.Name);
-                    }
-                    throw new EntityNotFoundException(String.Format("{0} wasn't found. Have a look around for it first.", thing.Name));
+                    Game.Instance.Inventory.AddThing(thing);
+                    Game.RemoveFromRoom(thing);
+                    return  new CommandResponse(String.Format("Added {0} to inventory", thing.Name));
                 }
-                throw new CommandException(String.Format("Don't be silly! {0} is too heavy to carry!", thing.Name));
+                throw new EntityNotFoundException(String.Format("{0} wasn't found. Have a look around for it first.", thing.Name));
             }
-            // That command doesn't exist on this controller.
-            throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
-
-
+            throw new CommandException(String.Format("Don't be silly! {0} is too heavy to carry!", thing.Name));
         }
 
     }

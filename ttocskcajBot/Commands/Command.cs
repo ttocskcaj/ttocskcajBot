@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using ttocskcajBot.Commands.Controllers;
 using ttocskcajBot.Entities;
+using ttocskcajBot.Exceptions;
 
 namespace ttocskcajBot.Commands
 {
@@ -11,19 +12,23 @@ namespace ttocskcajBot.Commands
     {
         public string Verb { get; set; }
         public string Entity { get; set; }
+        public DiscordMessage DiscordMessage { get; set; }
+
+        public EventHandler<CommandEventArgs> CommandIssued { get; set; }
 
         public Command()
         {
         }
 
-        internal static Command ParseMessage(DiscordMessage message)
+        internal static Command ParseMessage(DiscordMessage discordMessage)
         {
-            Console.WriteLine(String.Format("Player command: <{0}> {1}", message.Author.Username, message.Content));
+            Console.WriteLine(String.Format("Player command: <{0}> {1}", discordMessage.Author.Username, discordMessage.Content));
 
-            string commandString = message.Content.TrimStart('.');
+            string commandString = discordMessage.Content.TrimStart('.');
             string[] parts = commandString.Split(new[] { ' ' }, 2);
 
             Command command = new Command();
+            command.DiscordMessage = discordMessage;
             switch (parts.Length)
             {
                 case 0:
@@ -41,34 +46,23 @@ namespace ttocskcajBot.Commands
 
             return command;
         }
-        internal string Exec()
+        internal void Exec()
         {
-            Route route = Router.GetRoute(this);
-
-            if (route.MiddlewareBefore(this))
-            {
-                string response = route.Controller.RunCommand(this);
-                route.MiddlewareAfter(this);
-                return response;
-            }
-            else throw new CommandException("Tomato!");
+            OnCommandIssued(this);
         }
-
-        [Serializable]
-        internal class CommandException : Exception
+        protected virtual void OnCommandIssued(Command command)
         {
-            public CommandException()
+            EventHandler<CommandEventArgs> handler = CommandIssued;
+            if (handler != null)
             {
-            }
-
-            public CommandException(string message) : base(message)
-            {
-            }
-
-            public CommandException(string message, Exception innerException) : base(message, innerException)
-            {
+                handler(this, new CommandEventArgs() { Command = command });
             }
         }
+    }
+
+    internal class CommandEventArgs
+    {
+        public Command Command { get; set; }
     }
 }
 

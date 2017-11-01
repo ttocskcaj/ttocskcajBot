@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using ttocskcajBot.Commands;
 using static ttocskcajBot.Commands.Command;
+using static ttocskcajBot.Commands.RouteAction;
 
 namespace ttocskcajBot
 {
@@ -26,6 +27,7 @@ namespace ttocskcajBot
             });
 
             game = Game.Instance;
+            SetupRoutes();
 
             discord.MessageCreated += async e =>
             {
@@ -33,8 +35,10 @@ namespace ttocskcajBot
                 {
                     try
                     {
-                        string response = Command.ParseMessage(e.Message).Exec();
-                        await e.Message.RespondAsync(response);
+                        Command command = Command.ParseMessage(e.Message);
+                        CommandResponse response = Router.Route(command);
+                        await e.Message.RespondAsync(response.MessageResponse);
+
                     }
                     catch (Exception ex)
                     {
@@ -48,6 +52,22 @@ namespace ttocskcajBot
             await Task.Delay(-1);
 
         }
+        static void SetupRoutes()
+        {
+            // Game control routes
+            Router.AddRoute("new", new RouteAction(new ActionDelegate(GameController.New)));
+            Router.AddRoute("help", new RouteAction(new ActionDelegate(GameController.Help)));
 
+            // Area routes
+            Router.AddRoute("inspect", new RouteAction(new ActionDelegate(AreaController.Inspect)));
+
+            // Thing interaction routes
+            Router.AddRoute("take", new RouteAction(new ActionDelegate(ThingController.Take)));
+
+            // Inventory routes.
+            Router.AddRoute("inventory", new RouteAction(new ActionDelegate(InventoryController.Inventory)));
+            Router.AddRoute("drop", new RouteAction(new ActionDelegate(InventoryController.Drop)));
+            Router.AddRoute("equip", new RouteAction(new ActionDelegate(InventoryController.Equip)));
+        }
     }
 }

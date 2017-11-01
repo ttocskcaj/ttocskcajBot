@@ -1,4 +1,5 @@
-﻿using ttocskcajBot.Commands.Controllers;
+﻿using System;
+using ttocskcajBot.Commands.Controllers;
 using ttocskcajBot.Entities;
 using ttocskcajBot.Exceptions;
 using static ttocskcajBot.Commands.Command;
@@ -7,29 +8,21 @@ namespace ttocskcajBot.Commands
 {
     /// <summary>
     /// Runs commands that have to do with Areas
-    /// </summary>
-    internal class AreaController : IController
+    /// </summary>;
+    internal class AreaController
     {
-        public string RunCommand(Command command)
+        internal static CommandResponse Inspect(Command command)
         {
+            // Try and get an Area entity from the command.
+            if (command.Entity == null) throw new EntityNotFoundException("Please enter an entity to inspect!");
+            Area area = (Area)Game.Instance.FindEntity(command.Entity, "Area");
 
-            if (command.Verb.Equals("inspect"))
+            // Set each Thing in the area to discovered.
+            foreach (Thing thing in area.Things)
             {
-                // Try and get an Area entity from the command.
-                if (command.Entity == null) throw new EntityNotFoundException("Please enter an entity to inspect!");
-                Area area = (Area)Game.Instance.FindEntity(command.Entity, "Area");
-
-                foreach (Thing thing in area.Things)
-                {
-                    thing.Discovered = true;
-                }
-                return area.Description;
+                thing.Discovered = true;
             }
-            // That command doesn't exist on this controller.
-            throw new CommandException(Properties.Resources.ResourceManager.GetString("commandNotFound"));
-
-
+            return new CommandResponse(area.Description);
         }
-
     }
 }
