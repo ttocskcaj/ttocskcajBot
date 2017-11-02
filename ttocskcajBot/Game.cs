@@ -86,9 +86,12 @@ namespace ttocskcajBot
             {
                 foreach (Thing thing in area.Things)
                 {
-                    if (thing.ID.Equals(entityName) && type == "Thing")
+                    if (type.Equals("Thing"))
                     {
-                        return thing;
+                        if (thing.MatchesName(entityName))
+                        {
+                            return thing;
+                        }
                     }
                 }
                 if (area.ID.Equals(entityName) && type == "Area")
@@ -99,6 +102,10 @@ namespace ttocskcajBot
             throw new EntityNotFoundException($"{entityName} was not found!");
         }
 
+        public Thing FindThing(string thingID)
+        {
+            return (Thing) FindEntity(thingID, "Thing");
+        }
     }
 
 }

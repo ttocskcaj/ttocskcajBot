@@ -1,4 +1,5 @@
-﻿using ttocskcajBot.Entities;
+﻿using System.Diagnostics;
+using ttocskcajBot.Entities;
 using ttocskcajBot.Entities.Things;
 using ttocskcajBot.Exceptions;
 
@@ -20,6 +21,9 @@ namespace ttocskcajBot.Commands.Controllers
             {
                 thing.Discovered = true;
             }
+            Debug.WriteLine($"Inspected area: {area.Name} in room: {Game.Instance.CurrentRoom.Name}");
+            Debug.WriteLine($"\tResponse: {area.Description}");
+
             return new CommandResponse(area.Description);
         }
     }

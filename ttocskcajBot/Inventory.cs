@@ -37,14 +37,14 @@ namespace ttocskcajBot
 
         internal bool ContainsThing(string thingID)
         {
-            return Items.Where(item => item.Key.ID.Equals(thingID)).ToDictionary(x => x.Key, y => y.Value).Count > 0;
+            return Items.Where(item => item.Key.MatchesName(thingID)).ToDictionary(x => x.Key, y => y.Value).Count > 0;
         }
 
         internal void RemoveThing(string thingID)
         {
             if (ContainsThing(thingID))
             {
-                KeyValuePair<Thing, int> invEntry = Items.Where(item => item.Key.ID.Equals(thingID)).ToDictionary(x => x.Key, y => y.Value).First();
+                KeyValuePair<Thing, int> invEntry = Items.Where(item => item.Key.MatchesName(thingID)).ToDictionary(x => x.Key, y => y.Value).First();
                 if (invEntry.Value > 1)
                 {
                     Items[invEntry.Key]--;
@@ -67,14 +67,13 @@ namespace ttocskcajBot
             if (!ContainsThing(thingID))
                 throw new EntityNotFoundException($"{thingID} wasn't found in your inventory!");
 
-            KeyValuePair<Thing, int> invEntry = Items.Where(item => item.Key.ID.Equals(thingID)).ToDictionary(x => x.Key, y => y.Value).First();
+            KeyValuePair<Thing, int> invEntry = Items.Where(item => item.Key.MatchesName(thingID)).ToDictionary(x => x.Key, y => y.Value).First();
             return invEntry.Key;
         }
 
         internal string EquipThing(string thingID)
         {
             Thing thing = GetThing(thingID);
-            Console.WriteLine(thing.GetType().Name);
             switch (thing.GetType().Name)
             {
                 case "Weapon":

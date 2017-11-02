@@ -15,5 +15,9 @@ namespace ttocskcajBot.Commands.Controllers
 
         }
 
+        public static CommandResponse Room(Command command)
+        {
+            return new CommandResponse(Game.Instance.CurrentRoom.GetCurrentDescription());
+        }
     }
 }

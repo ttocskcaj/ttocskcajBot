@@ -6,7 +6,7 @@
     "attack": 0.3,
     "movement": -0.1,
     "name": "Rusty Bar",
-    "alternativeTerms": [ "bar", "iron_bar"],
+    "alternativeTerms": [ "bar", "iron_bar" ],
     "description": "A short, rusty iron bar. Good for hitting things with.",
     "equippedMessage": "You feel a sense of power rush through you as you brandish the bar. It's time to seek revenge on those Gerds!",
     "canTake": true

@@ -4,20 +4,41 @@
     "id": "brick_fire",
     "lightLevel": 0.4,
     "name": "Brick Fire",
-    "alternativeTerms": ["fire", "fireplace", "fire_place"],
+    "alternativeTerms": [ "fire", "fireplace", "fire_place" ],
     "description": "A brick fire. Light it for warmth and light.",
     "state": 0,
-    "canTake": false
+    "canTake": false,
+    "actionsReceivable": {
+      "light": {
+        "needsEquippedThing": true,
+        "needsDiscovering": false,
+        "result": {
+          "state": 1,
+          "lightLevel": 0.85
+        },
+        "message": "The fireplace roars into life and the room is flooded with light and warmth.\nTry ```.room``` to see what's changed!"
+      }
+    }
   },
   {
     "category": "Furniture",
     "id": "small_window",
     "lightLevel": 0.1,
     "name": "Small Window",
-    "alternativeTerms": [ "window", "dirty_window"],
+    "alternativeTerms": [ "window", "dirty_window" ],
     "description": "A small dirty window. Much too small to fit through.",
     "state": 1,
-    "canTake": false
+    "canTake": false,
+    "actionsReceivable": {
+      "open": {
+        "needsEquippedThing": false,
+        "needsDiscovering": false,
+
+        "result": {
+        },
+        "message": "You try to push open the window but it's stuck."
+      }
+    }
   }
 
 ]

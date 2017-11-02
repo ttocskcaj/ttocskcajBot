@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandResponse.cs" />
     <Compile Include="Commands\Controllers\InventoryController.cs" />
@@ -60,7 +61,7 @@
     <Compile Include="Commands\Middleware\IMiddleware.cs" />
     <Compile Include="Commands\RouteAction.cs" />
     <Compile Include="Commands\Router.cs" />
-    <Compile Include="Description.cs" />
+    <Compile Include="Entities\Description.cs" />
     <Compile Include="Entities\Area.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\Portal.cs" />

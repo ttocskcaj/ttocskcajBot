@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using DSharpPlus.Entities;
 using ttocskcajBot.Exceptions;
 
@@ -12,7 +13,7 @@ namespace ttocskcajBot.Commands
 
         internal static Command ParseMessage(DiscordMessage discordMessage)
         {
-            Console.WriteLine($"Player command: <{discordMessage.Author.Username}> {discordMessage.Content}");
+            Debug.WriteLine($"Player issued command: <{discordMessage.Author.Username}> {discordMessage.Content}");
 
             string commandString = discordMessage.Content.TrimStart('.');
             string[] parts = commandString.Split(new[] { ' ' }, 2);

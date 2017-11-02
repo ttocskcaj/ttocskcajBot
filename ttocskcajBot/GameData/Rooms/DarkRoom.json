@@ -41,5 +41,13 @@
         }
       ]
     }
+  ],
+  "portals": [
+    {
+      "name": "Stone Door",
+      "ID": "stone_door",
+      
+    }
   ]
+
 }

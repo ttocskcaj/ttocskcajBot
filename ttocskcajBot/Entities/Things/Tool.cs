@@ -2,6 +2,5 @@
 {
     internal class Tool : Thing
     {
-        public int Uses { get; set; }
     }
 }

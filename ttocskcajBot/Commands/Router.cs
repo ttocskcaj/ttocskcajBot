@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ttocskcajBot.Commands.Middleware;
 using ttocskcajBot.Exceptions;
 
 namespace ttocskcajBot.Commands
@@ -18,11 +19,31 @@ namespace ttocskcajBot.Commands
 
         internal static CommandResponse Route(Command command)
         {
-            if (Instance.Routes.ContainsKey(command.Verb))
+            if (!Instance.Routes.ContainsKey(command.Verb))
+                throw new CommandException("Command doesn't exist! Check out ```.help```");
+
+            // Run each middleware before method.
+            if (Instance.Routes[command.Verb].Middleware != null)
             {
-                return Instance.Routes[command.Verb].Action(command);
+                foreach (IMiddleware mw in Instance.Routes[command.Verb].Middleware)
+                {
+                    mw.Before(command);
+                }
             }
-            throw new CommandException("Command doesn't exist! Check out ```.help```");
+
+            // Exeucte the commands action.
+            CommandResponse response = Instance.Routes[command.Verb].Action(command);
+
+            // Run each middleware after method.
+            if (Instance.Routes[command.Verb].Middleware != null)
+            {
+                foreach (IMiddleware mw in Instance.Routes[command.Verb].Middleware)
+                {
+                    mw.After(command);
+                }
+            }
+
+            return response;
         }
 
         internal static void AddRoute(string commandVerb, RouteAction routeAction)

@@ -21,7 +21,7 @@ namespace ttocskcajBot.Entities
         internal string GetCurrentDescription()
         {
             double lightLevel = GetLightLevel();
-            return Descriptions.Where(x => x.MinLightLevel <= lightLevel).OrderBy(x => x.MinLightLevel).First().Message;
+            return Descriptions.Where(x => x.MinLightLevel <= lightLevel).OrderByDescending(x => x.MinLightLevel).First().Message;
         }
     }
 }
