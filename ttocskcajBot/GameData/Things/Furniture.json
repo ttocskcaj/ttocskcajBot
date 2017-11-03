@@ -1,44 +1,76 @@
 ﻿[
   {
-    "category": "Furniture",
-    "id": "brick_fire",
-    "lightLevel": 0.4,
-    "name": "Brick Fire",
-    "alternativeTerms": [ "fire", "fireplace", "fire_place" ],
-    "description": "A brick fire. Light it for warmth and light.",
-    "state": 0,
-    "canTake": false,
-    "actionsReceivable": {
-      "light": {
-        "needsEquippedThing": true,
-        "needsDiscovering": false,
-        "result": {
-          "state": 1,
-          "lightLevel": 0.85
+    "ID": "fireplace",
+    "Defaults": {
+      "LightLevel": 4,
+      "Name": "Fireplace",
+      "AlternativeTerms": [ "fire", "fireplace", "fire_place" ],
+      "State": 0,
+      "CanTake": false
+    },
+    "Variations": [
+      {
+        "Name": "Fire Pit",
+        "AlternativeTerms": [ "firepit", "fire_pit" ]
+      },
+      {
+        "Name": "Marble Fireplace",
+        "AlternativeTerms": [ "marble_fire", "marble_fireplace" ],
+        "LightLevel": 5
+      },
+      {
+        "Name": "Stone Fireplace",
+        "AlternativeTerms": [ "stone_fire", "stone_fireplace" ]
+      },
+      {
+        "Name": "Brick Fireplace",
+        "AlternativeTerms": [ "brick_fire", "brick_fireplace" ]
+      }
+    ],
+
+    "ActionsReceivable": {
+      "Light": {
+        "NeedsEquippedThing": true,
+        "NeedsDiscovering": false,
+        "Result": {
+          "State": 1
         },
-        "message": "The fireplace roars into life and the room is flooded with light and warmth.\nTry ```.room``` to see what's changed!"
+        "Message": "The fireplace roars into life and the room is flooded with light and warmth."
       }
     }
   },
   {
-    "category": "Furniture",
-    "id": "small_window",
-    "lightLevel": 0.1,
-    "name": "Small Window",
-    "alternativeTerms": [ "window", "dirty_window" ],
-    "description": "A small dirty window. Much too small to fit through.",
-    "state": 1,
-    "canTake": false,
-    "actionsReceivable": {
-      "open": {
-        "needsEquippedThing": false,
-        "needsDiscovering": false,
-
-        "result": {
+    "ID": "table",
+    "Defaults": {
+      "Name": "Table",
+      "AlternativeTerms": [ "dining_table" ],
+      "State": 0,
+      "CanTake": false
+    },
+    "Variations": [
+      {
+        "Name": "Wooden Table",
+        "AlternativeTerms": [ "wood_table", "wooden_table" ]
+      },
+      {
+        "Name": "Wicker Table",
+        "AlternativeTerms": [ "wicker_table" ],
+        "LightLevel": 5
+      }
+    ],
+    "ActionsReceivable": {
+      "Smash": {
+        "NeedsEquippedThing": false,
+        "NeedsDiscovering": false,
+        "DestroysThing": true,
+        "ProvidesThings": {
+          "wood_post": 0.5,
+          "wood_post_spikes": 0.08
         },
-        "message": "You try to push open the window but it's stuck."
+        "Message": "You smash the table to pieces."
       }
     }
   }
+
 
 ]

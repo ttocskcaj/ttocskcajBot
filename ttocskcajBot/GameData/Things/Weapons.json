@@ -1,14 +1,26 @@
 ﻿[
   {
-    "category": "weapons",
-    "id": "rusty_bar",
-    "type": "melee",
-    "attack": 0.3,
-    "movement": -0.1,
-    "name": "Rusty Bar",
-    "alternativeTerms": [ "bar", "iron_bar" ],
-    "description": "A short, rusty iron bar. Good for hitting things with.",
-    "equippedMessage": "You feel a sense of power rush through you as you brandish the bar. It's time to seek revenge on those Gerds!",
-    "canTake": true
+    "ID": "wood_post",
+    "Defaults": {
+      "Type": "melee",
+      "Attack": 1,
+      "Name": "Wooden Post",
+      "AlternativeTerms": [ "post" ],
+      "CanTake": true
+    }
+  },
+  {
+    "ID": "wood_post_spikes",
+    "Defaults": {
+      "Type": "melee",
+      "Attack": 3,
+      "Name": "Spikey Wooden Post",
+      "AlternativeTerms": [
+        "post",
+        "spikey_post",
+        "spikey_wooden_post"
+      ],
+      "CanTake": true
+    }
   }
 ]

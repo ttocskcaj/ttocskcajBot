@@ -7,7 +7,7 @@ using ttocskcajBot.Entities.Things;
 
 namespace ttocskcajBot
 {
-    internal class Action
+    public class Action
     {
         /// <summary>
         /// A dictionary of properties that get changed on the Thing as a result to this action happening.
@@ -30,9 +30,9 @@ namespace ttocskcajBot
         public bool NeedsDiscovering { get; set; }
 
         /// <summary>
-        /// A List of new Things that this action provides/creates when it happens. Dropped on the ground.
+        /// A Dictionary of ThingIDs that this action may provide/create when executed and the chance of each happening.
         /// </summary>
-        public List<Thing> ProvidesThings { get; set; }
+        public Dictionary<string, double> ProvidesThings { get; set; }
 
         /// <summary>
         /// Whether or not the Thing is destroyed when this action happens.

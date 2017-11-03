@@ -6,7 +6,7 @@ namespace ttocskcajBot.Commands.Controllers
     {
         public static CommandResponse New(Command command)
         {
-            Game.Instance.NewGame();
+            Game.NewGame();
             //return Game.Instance.CurrentRoom.GetCurrentDescription();
             return new CommandResponse(Game.Instance.CurrentRoom.GetCurrentDescription());
         }

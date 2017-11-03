@@ -1,13 +1,34 @@
 ﻿[
   {
-    "category": "armour",
-    "id": "blanket",
-    "movement": -0.3,
-    "defense": 0.4,
-    "name": "Blanket",
-    "alternativeTerms": [ "old_blanket" ],
-    "description": "A blanket. What do you think it's for..?",
-    "equippedMessage": "You start to feel warmer, and slightly less exposed to attacks.",
-    "canTake": true
+    "ID": "blanket",
+    "Defaults": {
+      "StatModifiers": {
+        "Movement": -1,
+        "Defense": 2,
+        "Warmth": 1
+      },
+      "Name": "Blanket",
+      "AlternativeTerms": [ "blanket" ],
+      "CanTake": true
+    },
+    "Variations": [
+      {
+        "Name": "Wool Blanket",
+        "StatModifiers": {
+          "Movement": -1,
+          "Defense": 1,
+          "Warmth": 2
+        },
+        "AlternativeTerms": [ "wool_blanket" ]
+      },
+      {
+        "Name": "Silk Blanket",
+        "StatModifiers": {
+          "Movement": 1,
+          "Warmth": 1
+        },
+        "AlternativeTerms": [ "silk_blanket" ]
+      }
+    ]
   }
 ]

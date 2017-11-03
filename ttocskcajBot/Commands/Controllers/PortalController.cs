@@ -7,7 +7,7 @@ namespace ttocskcajBot.Commands.Controllers
     {
         public static CommandResponse Enter(Command command)
         {
-            return;
+            throw new CommandException("Cabbages");
         }
     }
 }

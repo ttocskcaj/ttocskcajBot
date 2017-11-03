@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DSharpPlus, Version=3.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DSharpPlus.3.2.2\lib\net45\DSharpPlus.dll</HintPath>
+    <Reference Include="DSharpPlus, Version=3.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DSharpPlus.3.2.3\lib\net45\DSharpPlus.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -52,6 +52,7 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandResponse.cs" />
     <Compile Include="Commands\Controllers\InventoryController.cs" />
+    <Compile Include="Commands\Controllers\PortalController.cs" />
     <Compile Include="Commands\Controllers\ThingController.cs" />
     <Compile Include="Commands\Controllers\IController.cs" />
     <Compile Include="Commands\Controllers\GameController.cs" />
@@ -64,6 +65,13 @@
     <Compile Include="Entities\Description.cs" />
     <Compile Include="Entities\Area.cs" />
     <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Models\IModel.cs" />
+    <Compile Include="Models\Things\ArmourModel.cs" />
+    <Compile Include="Models\Things\FurnitureModel.cs" />
+    <Compile Include="Models\Things\ThingModel.cs" />
+    <Compile Include="Models\Things\ThingModelReferenceResolver.cs" />
+    <Compile Include="Models\Things\ToolModel.cs" />
+    <Compile Include="Models\Things\WeaponModel.cs" />
     <Compile Include="Entities\Portal.cs" />
     <Compile Include="Entities\Room.cs" />
     <Compile Include="Entities\Things\Weapon.cs" />
@@ -84,6 +92,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Chance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -105,11 +114,6 @@
     <Content Include="GameData\Help.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="GameData\Rooms\DarkRoom.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

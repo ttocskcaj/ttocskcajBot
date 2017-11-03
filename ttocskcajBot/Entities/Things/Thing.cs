@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ttocskcajBot.Entities.Things
 {
-    internal class Thing : IEntity, ICloneable
+    public class Thing : IEntity, ICloneable
     {
         /// <summary>
         /// The unique ID.
@@ -41,7 +44,7 @@ namespace ttocskcajBot.Entities.Things
         /// <summary>
         /// The amount of light the Thing produces.
         /// </summary>
-        public double LightLevel { get; set; }
+        public int LightLevel { get; set; }
 
         /// <summary>
         /// The state of the Thing. E.G. is it on or off?
@@ -69,20 +72,20 @@ namespace ttocskcajBot.Entities.Things
         public int Uses { get; set; }
 
         /// <summary>
+        /// Computed property.
+        /// Whether or not this thing holds other Things. (Tables, chests etc.)
+        /// </summary>
+        public bool ContainsThings => (Things.Length > 0);
+
+        /// <summary>
+        /// An array of Things that this Thing contains (if applicable).
+        /// </summary>
+        public Thing[] Things { get; set; }
+
+        /// <summary>
         /// The Actions that can be performed on this Thing.
         /// </summary>
         public Dictionary<string, Action> ActionsReceivable { get; set; }
-
-        /// <summary>
-        /// Allows setting/getting of properties by their name using reflection.
-        /// </summary>
-        /// <param name="propertyName">The name of the property to set/get</param>
-        /// <returns>The value of the specified property.</returns>
-        public object this[string propertyName]
-        {
-            get => GetType().GetProperty(propertyName)?.GetValue(this, null);
-            set => GetType().GetProperty(propertyName)?.SetValue(this, value, null);
-        }
 
         /// <summary>
         /// Whether or not this Thing is currently a light source. I.E. Is it on, and does it provide light?
@@ -137,7 +140,8 @@ namespace ttocskcajBot.Entities.Things
                 {
                     propertyValue = Convert.ToInt32(propertyValue);
                 }
-                this[propertyName] = propertyValue;
+                GetType().GetProperty(propertyName)?.SetValue(this, propertyValue, null);
+
             }
             string response = action.Message;
 
@@ -154,6 +158,47 @@ namespace ttocskcajBot.Entities.Things
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        public object this[string propertyKey]
+        {
+            get => GetType().GetProperty(propertyKey)?.GetValue(this);
+            set => GetType().GetProperty(propertyKey)?.SetValue(this, value);
+        }
+
+        public void SetProperties(Dictionary<string, object> properties)
+        {
+            foreach (KeyValuePair<string, object> property in properties)
+            {
+                PropertyInfo propertyInfo = GetType().GetProperty(property.Key);
+                if (propertyInfo == null) throw new JsonException("Property doesn't exist!");
+
+                object value = property.Value;
+
+                // If the value is a JToken, convert it to the correct type for the property.
+                if (value is JToken)
+                {
+                    value = ((JToken)property.Value).ToObject(propertyInfo.PropertyType);
+                }
+
+                // If the value is a long (int64), convert it to int32 (int)
+                if (value is long)
+                {
+                    value = Convert.ToInt32(value);
+                }
+
+                // If the property is the alternative terms, add them, rather than replace them.
+                if (property.Key.Equals("AlternativeTerms"))
+                {
+                    string[] array = (string[]) propertyInfo.GetValue(this);
+                    array = array.Concat((string[])value).ToArray();
+                    propertyInfo.SetValue(this, array);
+                }
+                else
+                {
+                    propertyInfo.SetValue(this, value);
+                }
+            }
         }
     }
 }

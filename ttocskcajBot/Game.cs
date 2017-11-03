@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -7,48 +8,67 @@ using Newtonsoft.Json;
 using ttocskcajBot.Entities;
 using ttocskcajBot.Entities.Things;
 using ttocskcajBot.Exceptions;
+using ttocskcajBot.Models.Things;
 
 namespace ttocskcajBot
 {
-    [SuppressMessage("ReSharper", "InvertIf")]
     internal class Game
     {
-
+        /// <summary>
+        /// Lazy initialization for singleton.
+        /// </summary>
         private static readonly Lazy<Game> Lazy = new Lazy<Game>(() => new Game());
+
+        /// <summary>
+        /// The singleton instance.
+        /// </summary>
         public static Game Instance => Lazy.Value;
 
+        /// <summary>
+        /// Reference to the room the player is currently in.
+        /// </summary>
         internal Room CurrentRoom { get; set; }
 
+        /// <summary>
+        /// The players Inventory.
+        /// </summary>
         internal Inventory Inventory { get; set; }
+
+        /// <summary>
+        /// Collection of all rooms.
+        /// </summary>
         internal List<Room> Rooms { get; set; }
-        internal List<Thing> Things { get; set; }
+
+        /// <summary>
+        /// Collection of all ThingModels.
+        /// Gets loaded with the gamedata and is used to generate Things.
+        /// </summary>
+        internal List<ThingModel> ThingModels { get; set; }
 
         public Game()
         {
             Rooms = new List<Room>();
-            Things = new List<Thing>();
+            ThingModels = new List<ThingModel>();
             Inventory = new Inventory();
             LoadGameData();
         }
 
         private void LoadGameData()
         {
-            // Load thing data.
-            Things.AddRange(JsonConvert.DeserializeObject<List<Furniture>>(File.ReadAllText("GameData/Things/Furniture.json")));
-            Things.AddRange(JsonConvert.DeserializeObject<List<Tool>>(File.ReadAllText("GameData/Things/Tools.json")));
-            Things.AddRange(JsonConvert.DeserializeObject<List<Armour>>(File.ReadAllText("GameData/Things/Armours.json")));
-            Things.AddRange(JsonConvert.DeserializeObject<List<Weapon>>(File.ReadAllText("GameData/Things/Weapons.json")));
-
+            // Load ThingModel data.
+            Debug.Write("Loading game data... ");
+            ThingModels.AddRange(JsonConvert.DeserializeObject<List<FurnitureModel>>(File.ReadAllText("GameData/Things/Furniture.json")));  // Furniture 
+            ThingModels.AddRange(JsonConvert.DeserializeObject<List<ToolModel>>(File.ReadAllText("GameData/Things/Tools.json")));           // Tools
+            ThingModels.AddRange(JsonConvert.DeserializeObject<List<ArmourModel>>(File.ReadAllText("GameData/Things/Armours.json")));       // Armour
+            ThingModels.AddRange(JsonConvert.DeserializeObject<List<WeaponModel>>(File.ReadAllText("GameData/Things/Weapons.json")));       // Weapons
+            Debug.WriteLine("Done!");
+            /* Old room loading data. Rooms are now random.
             // Load room data.
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
             {
-                ReferenceResolverProvider = () => new ThingReferenceResolver(Things)
+                ReferenceResolverProvider = () => new ThingModelReferenceResolver(ThingModels)
             };
-            foreach (string file in Directory.EnumerateFiles("GameData/Rooms", "*.json", SearchOption.AllDirectories))
-            {
-                Room room = JsonConvert.DeserializeObject<Room>(File.ReadAllText(file), jsonSerializerSettings);
-                Rooms.Add(room);
-            }
+            */
         }
 
         internal static void RemoveFromRoom(Thing thing)
@@ -63,14 +83,14 @@ namespace ttocskcajBot
             }
         }
 
-        internal void NewGame()
+        internal static void NewGame()
         {
-            if (Rooms.Count < 1)
+            if (Instance.Rooms.Count < 1)
             {
-                LoadGameData();
+                Instance.LoadGameData();
             }
-            CurrentRoom = Rooms.First(x => x.ID.Equals("dark_room"));
-            Inventory.Clear();
+            //Instance.CurrentRoom = Instance.Rooms.First(x => x.ID.Equals("dark_room"));
+            Instance.Inventory.Clear();
         }
         internal bool IsRunning()
         {
@@ -104,7 +124,7 @@ namespace ttocskcajBot
 
         public Thing FindThing(string thingID)
         {
-            return (Thing) FindEntity(thingID, "Thing");
+            return (Thing)FindEntity(thingID, "Thing");
         }
     }
 
