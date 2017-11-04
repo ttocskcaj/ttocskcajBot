@@ -28,6 +28,7 @@ namespace ttocskcajBot
             });
 
             SetupRoutes();
+            Game.LoadGameData();
 
             _discord.MessageCreated += async e =>
             {
@@ -64,15 +65,10 @@ namespace ttocskcajBot
             Router.AddRoute("room", new RouteAction(new IMiddleware[] { new GameRunningMiddleware() }, RoomController.Room));
             Router.AddRoute("enter", new RouteAction(new IMiddleware[] { new GameRunningMiddleware() }, PortalController.Enter));
 
-
-            // Area routes
-            Router.AddRoute("inspect", new RouteAction(new IMiddleware[] { new GameRunningMiddleware() }, AreaController.Inspect));
-
             // Thing interaction routes
             Router.AddRoute("take", new RouteAction(new IMiddleware[] { new GameRunningMiddleware() }, ThingController.Take));
             Router.AddRoute("light", new RouteAction(new IMiddleware[] { new GameRunningMiddleware() }, ThingController.Action));
             Router.AddRoute("open", new RouteAction(new IMiddleware[] { new GameRunningMiddleware() }, ThingController.Action));
-
 
             // Inventory routes.
             Router.AddRoute("inventory", new RouteAction(new IMiddleware[] { new GameRunningMiddleware() }, InventoryController.Inventory));

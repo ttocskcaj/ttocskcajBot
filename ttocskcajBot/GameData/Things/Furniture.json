@@ -54,8 +54,7 @@
       },
       {
         "Name": "Wicker Table",
-        "AlternativeTerms": [ "wicker_table" ],
-        "LightLevel": 5
+        "AlternativeTerms": [ "wicker_table" ]
       }
     ],
     "ActionsReceivable": {
@@ -68,6 +67,26 @@
           "wood_post_spikes": 0.08
         },
         "Message": "You smash the table to pieces."
+      }
+    }
+  },
+  {
+    "ID": "torch",
+    "Defaults": {
+      "Name": "Torch",
+      "State": 1,
+      "LightLevel": 6,
+      "CanTake": true
+    },
+    "Variations": [],
+    "ActionsReceivable": {
+      "Light": {
+        "NeedsEquippedThing": true,
+        "NeedsDiscovering": false,
+        "Result": {
+          "State": 1
+        },
+        "Message": "You light the torch and it flickers softly. The room is flooded with light."
       }
     }
   }

@@ -1,6 +1,6 @@
 ﻿namespace ttocskcajBot.Entities
 {
-    public interface IEntity
+    public class World : IEntity
     {
     }
 }

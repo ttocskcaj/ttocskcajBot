@@ -2,13 +2,13 @@
 using System.Linq;
 using Newtonsoft.Json.Serialization;
 
-namespace ttocskcajBot.Models.Things
+namespace ttocskcajBot.Generators.Things
 {
     internal class ThingModelReferenceResolver : IReferenceResolver
     {
-        private readonly List<ThingModel> _thingModels;
+        private readonly List<ThingGenerator> _thingModels;
 
-        internal ThingModelReferenceResolver(List<ThingModel> things)
+        internal ThingModelReferenceResolver(List<ThingGenerator> things)
         {
             _thingModels = things;
         }
@@ -19,20 +19,20 @@ namespace ttocskcajBot.Models.Things
 
         public string GetReference(object context, object value)
         {
-            ThingModel thing = (ThingModel)value;
+            ThingGenerator thing = (ThingGenerator)value;
             return thing.ID;
         }
 
         public bool IsReferenced(object context, object value)
         {
-            ThingModel thing = (ThingModel)value;
+            ThingGenerator thing = (ThingGenerator)value;
 
             return _thingModels.Contains(thing);
         }
 
         public void AddReference(object context, string reference, object value)
         {
-            _thingModels.Add((ThingModel)value);
+            _thingModels.Add((ThingGenerator)value);
         }
     }
 }

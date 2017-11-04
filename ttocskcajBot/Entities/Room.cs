@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ttocskcajBot.Entities.Things;
 
 namespace ttocskcajBot.Entities
 {
-    internal class Room
+    internal class Room : IEntity
     {
         public List<Portal> Portals { get; set; }
-        public List<Area> Areas { get; set; }
         public List<Description> Descriptions { get; set; }
+        public List<Thing> Things { get; set; }
         public string Name { get; set; }
         public string ID { get; set; }
 
         public double GetLightLevel()
         {
-            return Areas.SelectMany(area => area.Things, (area, thing) => new {area, thing})
-                .Where(x => x.thing.IsLightSource())
-                .Select(x => x.thing.LightLevel).Sum();
+            return Things.Where(x => x.IsLightSource()).Select(x => x.LightLevel).Sum();
         }
 
         internal string GetCurrentDescription()

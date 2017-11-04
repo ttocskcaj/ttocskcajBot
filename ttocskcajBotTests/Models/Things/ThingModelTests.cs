@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ttocskcajBot;
 using ttocskcajBot.Entities.Things;
-using ttocskcajBot.Models.Things;
+using ttocskcajBot.Generators.Things;
 
 namespace ttocskcajBotTests.Models.Things
 {
@@ -21,22 +20,22 @@ namespace ttocskcajBotTests.Models.Things
         [TestMethod()]
         public void CreateThingTest1()
         {
-            ThingModel thingModel = new FurnitureModel();
-            thingModel.ID = "test_thing";
-            thingModel.Defaults = new Dictionary<string, object>()
+            ThingGenerator thingGenerator = new FurnitureGenerator();
+            thingGenerator.ID = "test_thing";
+            thingGenerator.Defaults = new Dictionary<string, object>()
             {
                 {"Name", "Test Thing" }
             };
 
-            Thing thing = thingModel.CreateThing();
+            Thing thing = (Thing) thingGenerator.New();
             Assert.AreEqual(thing.Name, "Test Thing");
         }
         [TestMethod()]
         public void CreateThingTest2()
         {
-            ThingModel thingModel = Game.Instance.ThingModels.First(x => x.ID.Equals("fireplace"));
+            ThingGenerator thingGenerator = Game.WorldGenerator.ThingModels.First(x => x.ID.Equals("fireplace"));
 
-            Thing thing = thingModel.CreateThing();
+            Thing thing = (Thing)thingGenerator.New();
             Assert.IsTrue(new string[]{"Fire Pit", "Brick Fireplace", "Fireplace", "Marble Fireplace", "Stone Fireplace"}.Contains(thing.Name));
         }
     }

@@ -1,6 +1,6 @@
-﻿namespace ttocskcajBot.Models.Things
+﻿namespace ttocskcajBot.Generators.Things
 {
-    internal class WeaponModel : ThingModel
+    internal class WeaponGenerator : ThingGenerator
     {
         public float Attack { get; set; }
         public float Movement { get; set; }

@@ -1,6 +1,4 @@
 ﻿___Movement___
-Try inspecting an area in a room.
-```>inspect bed```
 Try moving through doors or windows.
 ```>enter {door_name}```
 
@@ -19,5 +17,5 @@ Attack creature (with equiped item)
 ```>attack {creature_name}```
 
 ___Stats___
-View stats, such as health etc
+View your stats, such as health etc
 ```>stats```

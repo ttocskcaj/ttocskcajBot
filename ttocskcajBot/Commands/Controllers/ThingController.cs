@@ -20,8 +20,8 @@ namespace ttocskcajBot.Commands.Controllers
                 throw new CommandException($"Don't be silly! {thing.Name} is too heavy to carry!");
             if (!thing.Discovered)
                 throw new EntityNotFoundException($"{thing.Name} wasn't found. Have a look around for it first.");
-            Game.Instance.Inventory.AddThing(thing);
-            Game.RemoveFromRoom(thing);
+            Game.Inventory.AddThing(thing);
+            Game.RemoveThingFromRoom(thing);
             return new CommandResponse($"Added {thing.Name} to inventory");
         }
 
@@ -46,20 +46,20 @@ namespace ttocskcajBot.Commands.Controllers
             {
                 // Check each equipped item to see if it can do this action.
                 Thing thing;
-                if (Game.Instance.Inventory.EquippedTool != null &&
-                    Game.Instance.Inventory.EquippedTool.ActionsAvailable.Contains(command.Verb))
+                if (Game.Inventory.EquippedTool != null &&
+                    Game.Inventory.EquippedTool.ActionsAvailable.Contains(command.Verb))
                 {
-                    thing = Game.Instance.Inventory.EquippedTool;
+                    thing = Game.Inventory.EquippedTool;
                 }
-                else if (Game.Instance.Inventory.EquippedArmour != null &&
-                         Game.Instance.Inventory.EquippedArmour.ActionsAvailable.Contains(command.Verb))
+                else if (Game.Inventory.EquippedArmour != null &&
+                         Game.Inventory.EquippedArmour.ActionsAvailable.Contains(command.Verb))
                 {
-                    thing = Game.Instance.Inventory.EquippedArmour;
+                    thing = Game.Inventory.EquippedArmour;
                 }
-                else if (Game.Instance.Inventory.EquippedWeapon != null &&
-                         Game.Instance.Inventory.EquippedWeapon.ActionsAvailable.Contains(command.Verb))
+                else if (Game.Inventory.EquippedWeapon != null &&
+                         Game.Inventory.EquippedWeapon.ActionsAvailable.Contains(command.Verb))
                 {
-                    thing = Game.Instance.Inventory.EquippedWeapon;
+                    thing = Game.Inventory.EquippedWeapon;
                 }
                 else
                 {

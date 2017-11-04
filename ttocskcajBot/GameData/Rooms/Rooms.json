@@ -1,0 +1,41 @@
+﻿[
+  {
+    "ID": "bedroom",
+    "Name": "Bedroom",
+    "Materials": {
+      "Floor": [ "wooden planks", "stone tiles" ],
+      "Walls": [ "smooth plaster", "stone covered in hangings" ]
+    },
+    "Things": {
+      "bed": 1.0,
+      "chest": 0.5,
+      "dresser": 0.9,
+      "table": 0.1
+    }
+  },
+  {
+    "ID": "hall",
+    "Name": "Hall",
+    "Materials": {
+      "Floor": [ "stone tiles covered in a beautiful runner" ],
+      "Walls": [ "smooth plaster", "rough stone covered in hangings" ]
+    },
+    "Things": {
+      "chest": 0.1,
+      "suit_of_armour": 0.1
+    }
+  },
+  {
+    "ID": "kitchen",
+    "Name": "Kitchen",
+    "Materials": {
+      "Floor": [ "wooden planks", "stone tiles" ],
+      "Walls": [ "smooth plaster", "rough stone bricks"]
+    },
+    "Things": {
+      "cupboards": 1.0,
+      "table": 1.0,
+      "chest": 0.2
+    }
+  }
+]

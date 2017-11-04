@@ -15,7 +15,7 @@ namespace ttocskcajBot.Entities.Things
         public object ResolveReference(object context, string reference)
         {
             Thing thing = _things.First(x => x.ID.Equals(reference));
-            return thing?.Clone();
+            return thing;
         }
 
         public string GetReference(object context, object value)

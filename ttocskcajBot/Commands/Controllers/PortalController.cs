@@ -1,5 +1,4 @@
 ﻿using ttocskcajBot.Exceptions;
-using ttocskcajBot.Properties;
 
 namespace ttocskcajBot.Commands.Controllers
 {

@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ttocskcajBot.Tools;
 
 namespace ttocskcajBot.Entities.Things
 {
-    public class Thing : IEntity, ICloneable
+    public class Thing : IEntity
     {
         /// <summary>
         /// The unique ID.
@@ -128,36 +127,20 @@ namespace ttocskcajBot.Entities.Things
         /// <returns>A response to show the user.</returns>
         public string ExecuteAction(Action action)
         {
-            // Change each property listed in the action results. Uses reflection and is probably slow :(
-            foreach (KeyValuePair<string, object> resultItem in action.Result)
+            // Change the properties to match the action's result.
+            SetProperties(action.Result);
+
+            foreach (KeyValuePair<string, double> providesThing in action.ProvidesThings)
             {
-                string propertyName = resultItem.Key;
-                propertyName = char.ToUpper(propertyName[0]) + propertyName.Substring(1);
-
-                // Hack to convert int64 to int32
-                object propertyValue = resultItem.Value;
-                if (propertyValue is long)
+                Chance.DoByChance(providesThing.Value, () =>
                 {
-                    propertyValue = Convert.ToInt32(propertyValue);
-                }
-                GetType().GetProperty(propertyName)?.SetValue(this, propertyValue, null);
-
+                    Thing thing = Game.CreateThing(providesThing.Key);
+                    Game.CurrentRoom.Things.Add(thing);
+                });
             }
-            string response = action.Message;
-
 
             // Return the message from the action to display to player.
-            return response;
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// Creates a memberwise clone of this Thing.
-        /// </summary>
-        /// <returns>A new Thing object that is a clone of this one.</returns>
-        public object Clone()
-        {
-            return MemberwiseClone();
+            return action.Message;
         }
 
         public object this[string propertyKey]

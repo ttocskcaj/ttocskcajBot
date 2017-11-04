@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using ttocskcajBot.Entities;
 using ttocskcajBot.Entities.Things;
+using ttocskcajBot.Models;
 using ttocskcajBot.Tools;
 
-namespace ttocskcajBot.Models.Things
+namespace ttocskcajBot.Generators.Things
 {
-    public abstract class ThingModel : IModel
+    public abstract class ThingGenerator : IGenerator
     {
         /// <summary>
         /// The ID.
@@ -37,7 +36,7 @@ namespace ttocskcajBot.Models.Things
         /// <summary>
         /// A constructor that initializes some properties to default values.
         /// </summary>
-        protected ThingModel()
+        protected ThingGenerator()
         {
             // Initialize some default property values.
             Defaults = new Dictionary<string, object>();
@@ -46,17 +45,17 @@ namespace ttocskcajBot.Models.Things
             ActionsReceivable = new Dictionary<string, Action>();
         }
          
-        public Thing CreateThing()
+        public IEntity New()
         {
-            return CreateThing(true, -1);
+            return New(true, -1);
         }
 
-        public Thing CreateThing(bool useVariations)
+        public IEntity New(bool useVariations)
         {
-            return CreateThing(useVariations, -1);
+            return New(useVariations, -1);
         }
 
-        public Thing CreateThing(bool useVariations, int variationKey)
+        public IEntity New(bool useVariations, int variationKey)
         {
             // Create a new thing object.
             Thing thing = new Thing

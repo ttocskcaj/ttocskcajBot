@@ -56,7 +56,6 @@
     <Compile Include="Commands\Controllers\ThingController.cs" />
     <Compile Include="Commands\Controllers\IController.cs" />
     <Compile Include="Commands\Controllers\GameController.cs" />
-    <Compile Include="Commands\Controllers\AreaController.cs" />
     <Compile Include="Commands\Controllers\RoomController.cs" />
     <Compile Include="Commands\Middleware\GameRunningMiddleware.cs" />
     <Compile Include="Commands\Middleware\IMiddleware.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="Entities\Area.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Models\IModel.cs" />
+    <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\Things\ArmourModel.cs" />
     <Compile Include="Models\Things\FurnitureModel.cs" />
     <Compile Include="Models\Things\ThingModel.cs" />
@@ -96,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="GameData\Rooms\Rooms.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="GameData\Things\Armours.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
