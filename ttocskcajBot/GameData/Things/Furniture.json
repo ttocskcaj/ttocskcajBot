@@ -89,7 +89,56 @@
         "Message": "You light the torch and it flickers softly. The room is flooded with light."
       }
     }
+  },
+  {
+    "ID": "bed",
+    "Defaults": {
+      "Name": "Bed",
+      "CanTake": false
+    },
+    "Variations": []
+  },
+  {
+    "ID": "stove",
+    "Defaults": {
+      "Name": "Stove",
+      "CanTake": false
+    },
+    "Variations": []
+  },
+  {
+    "ID": "suit_of_armour",
+    "Defaults": {
+      "Name": "Suit of Armour",
+      "CanTake": false
+    },
+    "Variations": []
+  },
+  {
+    "ID": "chest",
+    "Defaults": {
+      "Name": "Chest",
+      "CanTake": false
+    },
+    "Variations": []
+  },
+  {
+    "ID": "dresser",
+    "Defaults": {
+      "Name": "Dresser",
+      "CanTake": false
+    },
+    "Variations": []
+  },
+  {
+    "ID": "cupboards",
+    "Defaults": {
+      "Name": "Cupboards",
+      "CanTake": false
+    },
+    "Variations": []
   }
+
 
 
 ]

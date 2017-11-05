@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AvsAn, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvsAn.3.0.1\lib\net45\AvsAn.dll</HintPath>
+    </Reference>
     <Reference Include="DSharpPlus, Version=3.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DSharpPlus.3.2.3\lib\net45\DSharpPlus.dll</HintPath>
     </Reference>
@@ -64,14 +67,14 @@
     <Compile Include="Entities\Description.cs" />
     <Compile Include="Entities\Area.cs" />
     <Compile Include="Entities\IEntity.cs" />
-    <Compile Include="Models\IModel.cs" />
-    <Compile Include="Models\RoomModel.cs" />
-    <Compile Include="Models\Things\ArmourModel.cs" />
-    <Compile Include="Models\Things\FurnitureModel.cs" />
-    <Compile Include="Models\Things\ThingModel.cs" />
-    <Compile Include="Models\Things\ThingModelReferenceResolver.cs" />
-    <Compile Include="Models\Things\ToolModel.cs" />
-    <Compile Include="Models\Things\WeaponModel.cs" />
+    <Compile Include="Generators\IGenerator.cs" />
+    <Compile Include="Generators\RoomGenerator.cs" />
+    <Compile Include="Generators\Things\ArmourGenerator.cs" />
+    <Compile Include="Generators\Things\FurnitureGenerator.cs" />
+    <Compile Include="Generators\Things\ThingGenerator.cs" />
+    <Compile Include="Generators\Things\ThingModelReferenceResolver.cs" />
+    <Compile Include="Generators\Things\ToolGenerator.cs" />
+    <Compile Include="Generators\Things\WeaponGenerator.cs" />
     <Compile Include="Entities\Portal.cs" />
     <Compile Include="Entities\Room.cs" />
     <Compile Include="Entities\Things\Weapon.cs" />
@@ -93,6 +96,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Tools\Chance.cs" />
+    <Compile Include="Entities\World.cs" />
+    <Compile Include="Generators\WorldGenerator.cs" />
+    <Compile Include="Tools\ExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

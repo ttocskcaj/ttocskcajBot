@@ -33,7 +33,7 @@ namespace ttocskcajBotTests.Models.Things
         [TestMethod()]
         public void CreateThingTest2()
         {
-            ThingGenerator thingGenerator = Game.WorldGenerator.ThingModels.First(x => x.ID.Equals("fireplace"));
+            ThingGenerator thingGenerator = Game.WorldGenerator.ThingGenerators.First(x => x.ID.Equals("fireplace"));
 
             Thing thing = (Thing)thingGenerator.New();
             Assert.IsTrue(new string[]{"Fire Pit", "Brick Fireplace", "Fireplace", "Marble Fireplace", "Stone Fireplace"}.Contains(thing.Name));

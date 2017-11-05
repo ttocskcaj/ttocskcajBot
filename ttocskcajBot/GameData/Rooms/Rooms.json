@@ -10,7 +10,9 @@
       "bed": 1.0,
       "chest": 0.5,
       "dresser": 0.9,
-      "table": 0.1
+      "table": 0.1,
+      "fireplace": 0.7,
+      "torch": 1.0
     }
   },
   {
@@ -22,7 +24,8 @@
     },
     "Things": {
       "chest": 0.1,
-      "suit_of_armour": 0.1
+      "suit_of_armour": 0.1,
+      "torch": 1.0
     }
   },
   {
@@ -34,8 +37,10 @@
     },
     "Things": {
       "cupboards": 1.0,
-      "table": 1.0,
-      "chest": 0.2
+      "table": 0.9,
+      "chest": 0.2,
+      "stove": 1.0,
+      "torch": 1.0
     }
   }
 ]

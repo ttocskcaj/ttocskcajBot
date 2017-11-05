@@ -72,7 +72,7 @@ namespace ttocskcajBot.Commands.Controllers
             if (!Game.Inventory.ContainsThing(thingID))
                 throw new EntityNotFoundException($"You don't have {command.Entity}");
             Thing thing = Game.Inventory.GetThing(thingID);
-            Game.CurrentRoom.Things.Add(thing);
+            Game.World.CurrentRoom.Things.Add(thing);
 
             if (Game.Inventory.EquippedArmour == thing)
             {

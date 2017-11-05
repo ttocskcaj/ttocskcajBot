@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ttocskcajBot.Tools;
@@ -134,8 +135,8 @@ namespace ttocskcajBot.Entities.Things
             {
                 Chance.DoByChance(providesThing.Value, () =>
                 {
-                    Thing thing = Game.CreateThing(providesThing.Key);
-                    Game.CurrentRoom.Things.Add(thing);
+                    Thing thing = Game.WorldGenerator.GetNewThing(providesThing.Key);
+                    Game.World.CurrentRoom.Things.Add(thing);
                 });
             }
 
@@ -183,5 +184,6 @@ namespace ttocskcajBot.Entities.Things
                 }
             }
         }
+
     }
 }

@@ -45,17 +45,17 @@ namespace ttocskcajBot.Generators.Things
             ActionsReceivable = new Dictionary<string, Action>();
         }
          
-        public IEntity New()
+        public Thing New()
         {
             return New(true, -1);
         }
 
-        public IEntity New(bool useVariations)
+        public Thing New(bool useVariations)
         {
             return New(useVariations, -1);
         }
 
-        public IEntity New(bool useVariations, int variationKey)
+        public Thing New(bool useVariations, int variationKey)
         {
             // Create a new thing object.
             Thing thing = new Thing
@@ -83,6 +83,10 @@ namespace ttocskcajBot.Generators.Things
                 });
             }
             return thing;
+        }
+        IEntity IGenerator.New()
+        {
+            return New();
         }
 
     }

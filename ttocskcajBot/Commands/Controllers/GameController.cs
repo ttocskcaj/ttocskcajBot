@@ -7,7 +7,7 @@ namespace ttocskcajBot.Commands.Controllers
         public static CommandResponse New(Command command)
         {
             Game.NewGame();
-            return new CommandResponse(Game.CurrentRoom.GetCurrentDescription());
+            return new CommandResponse(Game.World.CurrentRoom.Description);
         }
         public static CommandResponse Help(Command command)
         {

@@ -16,7 +16,6 @@ namespace ttocskcajBot
     internal class Game
     {
         private static  Game _instance;
-        private Room _currentRoom;
         private Inventory _inventory;
         private List<Room> _rooms;
         private WorldGenerator _worldGenerator;
@@ -26,16 +25,6 @@ namespace ttocskcajBot
         /// The singleton instance.
         /// </summary>
         public static Game Instance => _instance ?? (_instance = new Game());
-
-
-        /// <summary>
-        /// Reference to the room the player is currently in.
-        /// </summary>
-        internal static Room CurrentRoom
-        {
-            get => Instance._currentRoom;
-            set => Instance._currentRoom = value;
-        }
 
         /// <summary>
         /// The players Inventory.
@@ -76,18 +65,20 @@ namespace ttocskcajBot
         {
             _rooms = new List<Room>();
             _inventory = new Inventory();
+            _worldGenerator = new WorldGenerator();
+            
         }
 
         public static void LoadGameData()
         {
             // Load ThingGenerator data.
             Console.Write("Loading game data... ");
-            WorldGenerator.ThingModels.AddRange(JsonConvert.DeserializeObject<List<FurnitureGenerator>>(File.ReadAllText("GameData/Things/Furniture.json")));  // Furniture 
-            WorldGenerator.ThingModels.AddRange(JsonConvert.DeserializeObject<List<ToolGenerator>>(File.ReadAllText("GameData/Things/Tools.json")));           // Tools
-            WorldGenerator.ThingModels.AddRange(JsonConvert.DeserializeObject<List<ArmourGenerator>>(File.ReadAllText("GameData/Things/Armours.json")));       // Armour
-            WorldGenerator.ThingModels.AddRange(JsonConvert.DeserializeObject<List<WeaponGenerator>>(File.ReadAllText("GameData/Things/Weapons.json")));       // Weapons
+            WorldGenerator.ThingGenerators.AddRange(JsonConvert.DeserializeObject<List<FurnitureGenerator>>(File.ReadAllText("GameData/Things/Furniture.json")));  // Furniture 
+            WorldGenerator.ThingGenerators.AddRange(JsonConvert.DeserializeObject<List<ToolGenerator>>(File.ReadAllText("GameData/Things/Tools.json")));           // Tools
+            WorldGenerator.ThingGenerators.AddRange(JsonConvert.DeserializeObject<List<ArmourGenerator>>(File.ReadAllText("GameData/Things/Armours.json")));       // Armour
+            WorldGenerator.ThingGenerators.AddRange(JsonConvert.DeserializeObject<List<WeaponGenerator>>(File.ReadAllText("GameData/Things/Weapons.json")));       // Weapons
 
-            WorldGenerator.RoomModels.AddRange(
+            WorldGenerator.RoomGenerators.AddRange(
                 JsonConvert.DeserializeObject<List<RoomGenerator>>(File.ReadAllText("GameData/Rooms/Rooms.json")));                             // Rooms
 
             Console.WriteLine("Done!");
@@ -95,12 +86,12 @@ namespace ttocskcajBot
 
         internal static void RemoveThingFromRoom(Thing thing)
         {
-            CurrentRoom.Things.Remove(thing);
+            World.CurrentRoom.Things.Remove(thing);
         }
 
         internal static void NewGame()
         {
-            World = (World) WorldGenerator.New();
+            World = WorldGenerator.New();
             // Clear the inventory.
             Inventory.Clear();
         }
@@ -108,14 +99,14 @@ namespace ttocskcajBot
 
         internal bool IsRunning()
         {
-            return CurrentRoom != null;
+            return World.CurrentRoom != null;
         }
 
         internal Thing FindThing(string thingID)
         {
             thingID = thingID.ToLower().Replace(' ', '_');
             // Check each area in the room for the entity
-            foreach (Thing thing in CurrentRoom.Things)
+            foreach (Thing thing in World.CurrentRoom.Things)
             {
                 if (thing.MatchesName(thingID))
                 {
@@ -124,14 +115,5 @@ namespace ttocskcajBot
             }
             throw new EntityNotFoundException($"{thingID} was not found!");
         }
-
-
-
-        public static Thing CreateThing(string thingID)
-        {
-            return (Thing) ThingModels.First(x => x.ID == thingID).CreateEntity();
-        }
     }
-
-
 }

@@ -1,27 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ttocskcajBot.Entities;
+using ttocskcajBot.Entities.Things;
 using ttocskcajBot.Generators.Things;
 using ttocskcajBot.Models;
+using ttocskcajBot.Tools;
 
 namespace ttocskcajBot.Generators
 {
-    public class WorldGenerator: IGenerator
+    public class WorldGenerator : IGenerator
     {
         /// <summary>
-        /// Collection of all ThingModels.
+        /// Collection of all ThingGenerators.
         /// Gets loaded with the gamedata and is used to generate Things.
         /// </summary>
-        internal static List<ThingGenerator> ThingModels { get; set; }
+        public  List<ThingGenerator> ThingGenerators { get; set; }
 
         /// <summary>
-        /// Collection of all RoomModels.
+        /// Collection of all RoomGenerators.
         /// Gets loaded with the gamedata and is used to generate Rooms.
         /// </summary>
-        public static List<RoomGenerator> RoomModels { get; set; }
+        public  List<RoomGenerator> RoomGenerators { get; set; }
 
-        public IEntity New()
+        public WorldGenerator()
         {
-            return new World();
+            ThingGenerators = new List<ThingGenerator>();
+            RoomGenerators = new List<RoomGenerator>();
+        }
+
+        public World New()
+        {
+            Console.WriteLine("Creating a new world!");
+            World world = new World();
+            Room startRoom = RoomGenerators[Chance.RandomInt(0, RoomGenerators.Count)].New();
+            Console.WriteLine("Starting room: \n" + startRoom.Description);
+            world.CurrentRoom = startRoom;
+            return world;
+        }
+
+        IEntity IGenerator.New()
+        {
+            return New();
+        }
+
+        public Thing GetNewThing(string thingID)
+        {
+            return ThingGenerators.First(x => x.ID == thingID).New();
         }
     }
 }
