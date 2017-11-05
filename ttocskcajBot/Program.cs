@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using DSharpPlus;
 using ttocskcajBot.Commands;
@@ -23,7 +24,7 @@ namespace ttocskcajBot
         {
             _discord = new DiscordClient(new DiscordConfiguration
             {
-                Token = "MzY2ODcwMjYxNzk2MTc1ODc1.DLzKLQ.oq9i7LxSWhAFMufTBiqZlWS_oUQ",
+                Token = File.ReadAllText("api_key"),
                 TokenType = TokenType.Bot
             });
 
